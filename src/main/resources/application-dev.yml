@@ -1,0 +1,16 @@
+
+netty:
+  port: 8888
+server:
+  servlet:
+    session:
+      persistent: true
+
+# spring 相关配置
+spring:
+#datasource:
+#  username: root
+#  password: root
+##  url: jdbc:mysql://localhost:3306/mybatis?serveTimezone=UTC&useUnicode=true&charEncoding=utf-8
+#  url: jdbc:mysql://172.30.17.14:3306/mybatis?serveTimezone=UTC&useUnicode=true&charEncoding=utf-8
+#  driver-class-name: com.mysql.cj.jdbc.Driver
