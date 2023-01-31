@@ -1,0 +1,49 @@
+#运行端口号
+server:
+  port: 2122
+  servlet:
+    session:
+      cookie:
+        name: JPOMID-SERVER
+      timeout: 1H
+spring:
+
+  application:
+    name: jpomServer
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      max-request-size: 2GB
+      max-file-size: 1GB
+
+
+#thymeleaf end
+banner:
+  msg: Mpms-Server 管理系统启动中
+# 静态资源配置
+interceptor:
+  resourceHandler: /css/**,/fonts/**,/img/**,/js/**,/favicon.ico
+  resourceLocation: classpath:/dist/css/,classpath:/dist/fonts/,classpath:/dist/img/,classpath:/dist/js/,classpath:/dist/favicon.ico
+  initPackageName: io.jpom.common.interceptor
+# 启动完成自动初始化指定包
+preload:
+  packageName: io.jpom.system.init
+# 强制去掉空格
+request:
+  trimAll: true
+  parameterXss: false
+#在线编辑格式
+
+#fileFormat: txt|yml|conf|properties|ini
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+
+# 打印日志
+#logging:
+#  level:
+#    io:
+#      jpom:
+#        dao: debug
