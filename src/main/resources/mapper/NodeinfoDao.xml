@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jpom.dao.NodeinfoDao">
+
+    <resultMap id="BaseResultMap" type="io.jpom.entity.Nodeinfo">
+        <!--@Table NodeInfo-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="json" column="json" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, name, json
+        from PUBLIC.node_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, name, json
+        from PUBLIC.node_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryByName" resultMap="BaseResultMap">
+        select
+            id, json, name
+        from PUBLIC.node_info
+        where name = #{name}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, name, json
+        from PUBLIC.node_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="json != null and json != ''">
+                and json = #{json}
+            </if>
+        </where>
+    </select>
+
+    <!--    查询所有数据-->
+    <select id="queryAllData" resultMap="BaseResultMap">
+        select * from PUBLIC.node_info
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into PUBLIC.node_info(name, json)
+        values (#{name}, #{json})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update PUBLIC.node_info
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="json != null and json != ''">
+                json = #{json},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from PUBLIC.node_info where id = #{id}
+    </delete>
+
+  <!--通过名字删除-->
+  <delete id="deleteByName">
+    delete from PUBLIC.node_info where name = #{name}
+  </delete>
+
+</mapper>
