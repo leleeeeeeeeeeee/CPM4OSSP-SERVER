@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jpom.minisyslog.dao.MinisyslogDao">
+
+    <resultMap id="BaseResultMap" type="io.jpom.minisyslog.entity.Minisyslog">
+        <!--@Table MiniSysLog-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="extra" column="extra" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, type, ip, time, content, level, extra
+        from PUBLIC.mini_sys_log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, type, ip, time, content, level, extra
+        from PUBLIC.mini_sys_log
+        limit #{offset}, #{limit}
+    </select>
+
+  <!--日志总条数-->
+    <select id="recordCount" resultType="Integer">
+        select count(*) from PUBLIC.mini_sys_log
+        <where>
+            <if test="minisyslog.id != null">
+                and id = #{minisyslog.id}
+            </if>
+            <if test="minisyslog.type != null">
+                and type = #{minisyslog.type}
+            </if>
+            <if test="minisyslog.ip != null and minisyslog.ip != ''">
+                and ip = #{minisyslog.ip}
+            </if>
+            <if test="minisyslog.time != null and minisyslog.time != ''">
+                and time between #{minisyslog.time} and #{endTime}
+            </if>
+            <if test="minisyslog.content != null and minisyslog.content != ''">
+                and content = #{minisyslog.content}
+            </if>
+            <if test="minisyslog.level != null">
+                and level = #{minisyslog.level}
+            </if>
+            <if test="minisyslog.extra != null and minisyslog.extra != ''">
+                and extra = #{minisyslog.extra}
+            </if>
+        </where>
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, type, ip, time, content, level, extra
+        from PUBLIC.mini_sys_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+            <if test="extra != null and extra != ''">
+                and extra = #{extra}
+            </if>
+        </where>
+    </select>
+
+  <!--通过实体作为筛选条件查询-->
+  <select id="ConQueryAll" resultMap="BaseResultMap">
+    select id, type, ip, time, content, level, extra
+    from PUBLIC.mini_sys_log
+    <where>
+      <if test="minisyslog.id != null">
+        and id = #{minisyslog.id}
+      </if>
+      <if test="minisyslog.type != null">
+        and type = #{minisyslog.type}
+      </if>
+      <if test="minisyslog.ip != null and minisyslog.ip != ''">
+        and ip = #{minisyslog.ip}
+      </if>
+      <if test="minisyslog.time != null and minisyslog.time != ''">
+        and time between #{minisyslog.time} and #{endTime}
+      </if>
+      <if test="minisyslog.content != null and minisyslog.content != ''">
+        and content = #{minisyslog.content}
+      </if>
+      <if test="minisyslog.level != null">
+        and level = #{minisyslog.level}
+      </if>
+      <if test="minisyslog.extra != null and minisyslog.extra != ''">
+        and extra = #{minisyslog.extra}
+      </if>
+    </where>
+    order by id desc
+      LIMIT #{page},#{limit}
+  </select>
+
+
+  <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into PUBLIC.mini_sys_log(type, ip, time, content, level, extra)
+        values (#{type}, #{ip}, #{time}, #{content}, #{level}, #{extra})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update PUBLIC.mini_sys_log
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="extra != null and extra != ''">
+                extra = #{extra},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from PUBLIC.mini_sys_log where id = #{id}
+    </delete>
+
+    <!--通过主键删除-->
+    <delete id="deleteByDate">
+        delete
+        from PUBLIC.mini_sys_log
+        where #{time} > time
+    </delete>
+
+   <!--清空表中的日志-->
+   <delete id="deleteAll">
+        delete from PUBLIC.mini_sys_log
+   </delete>
+
+   <!--删除指定行数的日志-->
+   <delete id="deleteMulLog">
+      delete from PUBLIC.mini_sys_log where id between #{id} and #{maxid}
+   </delete>
+
+   <delete id="delSelectLog">
+    delete from PUBLIC.mini_sys_log where id in({#id})
+   </delete>
+</mapper>
