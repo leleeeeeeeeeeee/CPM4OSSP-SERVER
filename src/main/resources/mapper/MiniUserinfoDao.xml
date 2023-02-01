@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jpom.dao.MiniUserinfoDao">
+
+    <resultMap id="BaseResultMap" type="io.jpom.entity.MiniUserinfo">
+        <!--@Table UserInfo2-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="json" column="json" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, json, name
+        from PUBLIC.mini_user_info
+        where id = #{id}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryByName" resultMap="BaseResultMap">
+        select
+            id, json, name
+        from PUBLIC.mini_user_info
+        where name = #{name}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, json, name
+        from PUBLIC.mini_user_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, json, name
+        from PUBLIC.mini_user_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="json != null and json != ''">
+                and json = #{json}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+<!--    查询所有数据-->
+    <select id="queryAllData" resultMap="BaseResultMap">
+        select json,name from PUBLIC.mini_user_info
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into PUBLIC.mini_user_info(json, name)
+        values (#{json}, #{name})
+    </insert>
+
+    <!--通过name修改数据-->
+    <update id="update">
+        update PUBLIC.mini_user_info
+        <set>
+            <if test="json != null and json != ''">
+                json = #{json},
+            </if>
+<!--            <if test="name != null and name != ''">-->
+<!--                name = #{name},-->
+<!--            </if>-->
+        </set>
+        where  name= #{name}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from PUBLIC.mini_user_info where id = #{id}
+    </delete>
+
+    <!--通过Name删除-->
+    <delete id="deleteByName">
+        delete from PUBLIC.mini_user_info where name = #{name}
+    </delete>
+
+</mapper>
