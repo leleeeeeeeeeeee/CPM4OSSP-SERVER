@@ -1,4 +1,4 @@
-package io.jpom.util;
+package mpms.util;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateField;
@@ -10,8 +10,8 @@ import cn.hutool.jwt.JWTHeader;
 import cn.hutool.jwt.JWTValidator;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import cn.jiangzeyin.common.DefaultSystemLog;
-import io.jpom.model.data.UserModel;
-import io.jpom.system.ServerExtConfigBean;
+import mpms.model.data.UserModel;
+import mpms.system.ServerExtConfigBean;
 
 /**
  * jwt 工具类
