@@ -48,4 +48,20 @@ public class JwtUtil {
 		}
 		return null;
 	}
+
+
+	/**
+	 * 读取token 信息 过期也能读取
+	 *
+	 * @param token token
+	 * @return claims
+	 */
+	public static JWT readBody(String token) {
+		try {
+			return parseBody(token);
+		} catch (Exception e) {
+			DefaultSystemLog.getLog().warn("token 解析失败：" + token, e);
+			return null;
+		}
+	}
 }
