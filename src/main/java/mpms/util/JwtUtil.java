@@ -74,4 +74,17 @@ public class JwtUtil {
 	public static String readUserId(JWT jwt) {
 		return Convert.toStr(jwt.getPayload(KEY_USER_ID));
 	}
+
+	/**
+	 * 获取jwt的唯一身份标识
+	 *
+	 * @param jwt jwt
+	 * @return id
+	 */
+	public static String getId(JWT jwt) {
+		if (null == jwt) {
+			return null;
+		}
+		return Convert.toStr(jwt.getPayload(JWT.JWT_ID));
+	}
 }
