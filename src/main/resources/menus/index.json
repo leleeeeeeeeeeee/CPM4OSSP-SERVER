@@ -1,0 +1,164 @@
+[
+  {
+    "title": "节点管理",
+    "icon_v3": "block",
+    "id": "nodeManager",
+    "childs": [
+      {
+        "title": "节点列表",
+        "id": "nodeList"
+      }
+    ]
+  },
+//      },
+//      {
+//        "title": "节点升级",
+//        "id": "nodeUpdate",
+//        "role": "sys"
+//      },
+//      {
+//        "title": "项目搜索",
+//        "id": "projectSearch",
+//        "role": "sys"
+//      },
+//      {
+//        "title": "SSH管理",
+//        "id": "sshList"
+//      }
+//    ]
+//  },
+//  {
+//    "title": "节点分发",
+//    "icon_v3": "apartment",
+//    "dynamic": "showOutGiving",
+//    "childs": [
+//      {
+//        "id": "outgiving",
+//        "title": "分发列表"
+//      },
+//      {
+//        "id": "outgivingLog",
+//        "title": "分发日志",
+//        "dynamic": "showOutGiving"
+//      },
+//      {
+//        "id": "outgivingWhitelistDirectory",
+//        "title": "分发白名单配置",
+//        "dynamic": "showOutGiving"
+//      }
+//    ]
+//  },
+//  {
+//    "title": "监控管理",
+//    "icon_v3": "monitor",
+//    "childs": [
+//      {
+//        "id": "monitor",
+//        "title": "监控列表"
+//      },
+//      {
+//        "id": "monitorLog",
+//        "title": "监控日志"
+//      },
+//      {
+//        "id": "userOptLog",
+//        "title": "操作监控"
+//      }
+//    ]
+//  },
+//  {
+//    "title": "在线构建",
+//    "icon_v3": "build",
+//    "childs": [
+//      {
+//        "id": "repository",
+//        "title": "仓库信息"
+//      },
+//      {
+//        "id": "buildList",
+//        "title": "构建列表"
+//      },
+//      {
+//        "id": "buildHistory",
+//        "title": "构建历史"
+  {
+    "title": "用户管理",
+    "icon_v3": "user",
+    "childs": [
+      {
+        "id": "user",
+        "title": "用户列表"
+      },
+//      {
+//        "id": "roleList",
+//        "title": "角色管理"
+//      },
+      // {
+      //   "id": "user_log",
+      //   "title": "操作日志"
+      // }
+    ]
+  },
+  {
+    "title": "仓库管理",
+    "icon_v3": "build",
+    "childs": [
+      {
+        "id": "repository_source",
+        "title": "软件源模板列表"
+      },
+      {
+        "id": "repository_package",
+        "title": "软件包列表"
+      }
+    ]
+  },
+  {
+    "title": "审计管理",
+    "icon_v3": "audit",
+    "childs": [
+      {
+        "id": "audit",
+        "title": "审计日志"
+      }
+    ]
+  }
+  // {
+  //   "title": "系统管理",
+  //   "icon_v3": "setting",
+  //   "childs": [
+  //     {
+  //       "id": "system_log",
+  //       "title": "系统日志"
+  //     }
+  //   ]
+  // }
+]
+//  },
+//  {
+//    "title": "系统管理",
+//    "icon_v3": "setting",
+//    "role": "sys",
+//    "childs": [
+//      {
+//        "id": "monitorConfigEmail",
+//        "title": "邮箱配置"
+//      },
+//      {
+//        "id": "cacheManage",
+//        "title": "缓存管理"
+//      },
+//      {
+//        "id": "logManage",
+//        "title": "系统日志"
+//      },
+//      {
+//        "id": "update",
+//        "title": "在线升级"
+//      },
+//      {
+//        "id": "sysConfig",
+//        "title": "系统配置"
+//      }
+//    ]
+
