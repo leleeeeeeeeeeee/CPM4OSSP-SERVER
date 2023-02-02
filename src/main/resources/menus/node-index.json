@@ -1,0 +1,96 @@
+[
+  {
+    "id": "welcome",
+    "title": "首页",
+    "icon_v3": "dashboard"
+  },
+  //  {
+  //    "id": "manage",
+  //    "title": "项目管理",
+  //    "icon_v3": "project",
+  //    "childs": [
+  //      {
+  //        "id": "manageList",
+  //        "title": "项目列表"
+  //      },
+  //      {
+  //        "id": "jdkList",
+  //        "title": "JDK管理"
+  //      },
+  //      {
+  //        "id": "projectRecover",
+  //        "title": "项目回收"
+  //      }
+  //    ]
+  //  },
+  //  {
+  //    "id": "otherM",
+  //    "title": "其他功能",
+  //    "icon_v3": "more",
+  //    "childs": [
+  //      {
+  //        "id": "tomcatManage",
+  //        "title": "Tomcat管理"
+  //      },
+  //      {
+  //        "id": "script",
+  //        "title": "脚本模板"
+  //      }
+  //    ]
+  //  },
+  //  {
+  //    "id": "nginx",
+  //    "title": "nginx管理",
+  //    "icon_v3": "gateway",
+  //    "childs": [
+  //      {
+  //        "id": "nginxList",
+  //        "title": "nginx列表"
+  //      },
+  //      {
+  //        "id": "certificate",
+  //        "title": "证书管理"
+  //      }
+  //    ]
+  //  },
+  //  {
+  //    "id": "systemConfig",
+  //    "title": "系统管理",
+  //    "icon_v3": "setting",
+  //    "role": "sys",
+  //    "childs": [
+  //      {
+  //        "id": "whitelistDirectory",
+  //        "title": "白名单配置"
+  //      },
+  //      {
+  //        "id": "cacheManage",
+  //        "title": "缓存管理"
+  //      },
+  //      {
+  //        "id": "logManage",
+  //        "title": "系统日志"
+  //      },
+  //      {
+  //        "id": "update",
+  //        "title": "在线升级"
+  //      },
+  //      {
+  //        "id": "sysConfig",
+  //        "title": "系统配置"
+  //      }
+  //    ]
+  //  },
+  {
+    "id": "package",
+    "title": "软件包管理",
+    "url": "",
+    "icon_v3": "border"
+  },
+  {
+    "id": "source",
+    "title": "软件源管理",
+    "url": "",
+    "icon_v3": "branches"
+  }
+]
