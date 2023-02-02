@@ -37,4 +37,15 @@ public class JwtUtil {
 		}
 		return KEY;
 	}
+
+	public static JWT parseBody(String token) {
+		if (StrUtil.isEmpty(token)) {
+			return null;
+		}
+		JWT jwt = JWT.of(token);
+		if (jwt.verify(JWTSignerUtil.hs256(getKey()))) {
+			return jwt;
+		}
+		return null;
+	}
 }
