@@ -1,13 +1,13 @@
-package io.jpom;
+package mpms;
 
 import cn.jiangzeyin.common.EnableCommonBoot;
 import cn.jiangzeyin.common.spring.event.ApplicationEventLoad;
-import io.jpom.common.Type;
-import io.jpom.common.interceptor.IpInterceptor;
-import io.jpom.common.interceptor.LoginInterceptor;
-import io.jpom.common.interceptor.OpenApiInterceptor;
-import io.jpom.common.interceptor.PermissionInterceptor;
-import io.jpom.permission.CacheControllerFeature;
+import mpms.common.Type;
+import mpms.common.interceptor.IpInterceptor;
+import mpms.common.interceptor.LoginInterceptor;
+import mpmscommon.interceptor.OpenApiInterceptor;
+import mpms.common.interceptor.PermissionInterceptor;
+import mpms.permission.CacheControllerFeature;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
