@@ -87,4 +87,24 @@ public class JwtUtil {
 		}
 		return Convert.toStr(jwt.getPayload(JWT.JWT_ID));
 	}
+
+	/**
+	 * 判断是否过期
+	 *
+	 * @param jwt    claims
+	 * @param leeway 容忍空间，单位：秒。当不能晚于当前时间时，向后容忍；不能早于向前容忍。
+	 * @return 是否过期
+	 */
+	public static boolean expired(JWT jwt, long leeway) {
+		if (jwt == null) {
+			return true;
+		}
+		try {
+			JWTValidator of = JWTValidator.of(jwt);
+			of.validateDate(DateUtil.date(), leeway);
+		} catch (Exception e) {
+			return true;
+		}
+		return false;
+	}
 }
