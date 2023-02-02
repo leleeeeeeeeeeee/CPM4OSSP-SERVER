@@ -64,4 +64,14 @@ public class JwtUtil {
 			return null;
 		}
 	}
+
+	/**
+	 * 读取用户id
+	 *
+	 * @param jwt jwt
+	 * @return 用户id
+	 */
+	public static String readUserId(JWT jwt) {
+		return Convert.toStr(jwt.getPayload(KEY_USER_ID));
+	}
 }
