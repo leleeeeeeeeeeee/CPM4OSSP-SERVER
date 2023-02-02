@@ -107,4 +107,25 @@ public class JwtUtil {
 		}
 		return false;
 	}
+
+	/**
+	 * 生成token
+	 *
+	 * @param userModel 用户
+	 * @return token
+	 */
+	public static String builder(UserModel userModel) {
+		int authorizeExpired = ServerExtConfigBean.getInstance().getAuthorizeExpired();
+		DateTime now = DateTime.now();
+		JWT jwt = JWT.create();
+		jwt.setHeader(JWTHeader.ALGORITHM, ALGORITHM);
+		jwt.setPayload(KEY_USER_ID, userModel.getId())
+				.setJWTId(userModel.getUserMd5Key())
+				.setIssuer("Jpom")
+				.setIssuedAt(now)
+				.setExpiresAt(now.offsetNew(DateField.HOUR, authorizeExpired));
+		return jwt.sign(JWTSignerUtil.hs256(getKey()));
+	}
+
+
 }
