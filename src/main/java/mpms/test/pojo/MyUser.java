@@ -1,4 +1,4 @@
-package io.jpom.test.pojo;
+package mpms.test.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
