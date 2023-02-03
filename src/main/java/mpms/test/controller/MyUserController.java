@@ -21,4 +21,11 @@ public class MyUserController {
 	public String getUsers(){
 		return JsonMessage.getString(200, "", userMapper.queryAllUser());
 	}
+
+	// 查询用戶
+	@GetMapping("/getUer/{id}")
+	public MyUser getUser(@PathVariable("id") Integer id){
+		return userMapper.queryUserById(id);
+	}
+
 }
