@@ -1,6 +1,6 @@
-package io.jpom.test.dao;
+package mpms.test.dao;
 
-import io.jpom.test.pojo.MyUser;
+import mpms.test.pojo.MyUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
