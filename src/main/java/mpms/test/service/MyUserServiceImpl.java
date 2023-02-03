@@ -1,8 +1,8 @@
-package io.jpom.test.service;
+package mpms.test.service;
 
 
-import io.jpom.test.dao.UserMapper;
-import io.jpom.test.pojo.MyUser;
+import mpms.test.dao.UserMapper;
+import mpms.test.pojo.MyUser;
 
 import java.util.List;
 
