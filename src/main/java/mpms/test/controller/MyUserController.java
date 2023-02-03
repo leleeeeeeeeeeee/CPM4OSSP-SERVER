@@ -1,8 +1,8 @@
-package io.jpom.test.controller;
+package mpms.test.controller;
 
 import cn.jiangzeyin.common.JsonMessage;
-import io.jpom.test.dao.UserMapper;
-import io.jpom.test.pojo.MyUser;
+import mpms.test.dao.UserMapper;
+import mpms.test.pojo.MyUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
