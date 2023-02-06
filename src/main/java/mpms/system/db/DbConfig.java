@@ -61,4 +61,9 @@ public class DbConfig {
 	public static void autoClear(String tableName, String timeClo) {
 
 	}
+
+
+	public static void autoClear(String tableName, String timeClo, int maxCount, Consumer<Long> consumer) {
+		autoClear(tableName, timeClo, maxCount, null, consumer);
+	}
 }
