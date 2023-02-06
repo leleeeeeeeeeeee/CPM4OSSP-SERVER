@@ -43,4 +43,8 @@ public class DbConfig {
 		}
 		return dbConfig;
 	}
+
+	public void initOk() {
+		init = true;
+	}
 }
