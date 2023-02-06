@@ -1,4 +1,4 @@
-package io.jpom.system.init;
+package mpms.system.init;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.io.FileUtil;
