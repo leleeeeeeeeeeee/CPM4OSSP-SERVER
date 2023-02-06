@@ -47,4 +47,8 @@ public class DbConfig {
 	public void initOk() {
 		init = true;
 	}
+
+	public boolean isInit() {
+		return init;
+	}
 }
