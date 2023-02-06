@@ -32,4 +32,15 @@ public class DbConfig {
 	 */
 	private volatile boolean init;
 
+	/**
+	 * 单利模式
+	 *
+	 * @return config
+	 */
+	public static DbConfig getInstance() {
+		if (dbConfig == null) {
+			dbConfig = new DbConfig();
+		}
+		return dbConfig;
+	}
 }
