@@ -51,4 +51,14 @@ public class DbConfig {
 	public boolean isInit() {
 		return init;
 	}
+
+	/**
+	 * 清除超限制数量的数据
+	 *
+	 * @param tableName 表名
+	 * @param timeClo   时间字段名
+	 */
+	public static void autoClear(String tableName, String timeClo) {
+
+	}
 }
