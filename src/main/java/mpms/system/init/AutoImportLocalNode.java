@@ -45,4 +45,23 @@ public class AutoImportLocalNode {
 		jsonObject.put("desc", "请勿删除此文件,服务端安装id和插件端互通关联");
 		JsonFileUtil.saveJson(file.getAbsolutePath(), jsonObject);
 	}
+
+	@PreLoadMethod
+	private static void loadAgent() {
+		nodeService = SpringUtil.getBean(NodeService.class);
+		List<NodeModel> list = nodeService.list();
+		if (list != null && !list.isEmpty()) {
+			return;
+		}
+
+		try {
+			List<sun.jvmstat.monitor.MonitoredVm> monitoredVms = JvmUtil.listMainClass(AGENT_MAIN_CLASS);
+			monitoredVms.forEach(monitoredVm -> {
+				sun.jvmstat.monitor.VmIdentifier vmIdentifier = monitoredVm.getVmIdentifier();
+				findPid(vmIdentifier.getUserInfo());
+			});
+		} catch (Exception e) {
+			DefaultSystemLog.getLog().error("自动添加本机节点错误", e);
+		}
+	}
 }
