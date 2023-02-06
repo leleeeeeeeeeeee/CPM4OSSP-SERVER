@@ -64,4 +64,38 @@ public class AutoImportLocalNode {
 			DefaultSystemLog.getLog().error("自动添加本机节点错误", e);
 		}
 	}
+
+	private static void findPid(String pid) {
+		File file = ConfigBean.getInstance().getApplicationJpomInfo(Type.Agent);
+		if (!file.exists() || file.isDirectory()) {
+			return;
+		}
+		// 比较进程id
+		String json = FileUtil.readString(file, CharsetUtil.CHARSET_UTF_8);
+		JpomManifest jpomManifest = JSONObject.parseObject(json, JpomManifest.class);
+		if (!pid.equals(String.valueOf(jpomManifest.getPid()))) {
+			return;
+		}
+		// 判断自动授权文件是否存在
+		String path = ConfigBean.getInstance().getAgentAutoAuthorizeFile(jpomManifest.getDataPath());
+		if (!FileUtil.exist(path)) {
+			return;
+		}
+		json = FileUtil.readString(path, CharsetUtil.CHARSET_UTF_8);
+		AgentAutoUser autoUser = JSONObject.parseObject(json, AgentAutoUser.class);
+		// 判断授权信息
+
+		NodeModel nodeModel = new NodeModel();
+		nodeModel.setUrl(StrUtil.format("127.0.0.1:{}", jpomManifest.getPort()));
+		nodeModel.setName("本机");
+		nodeModel.setId("01");
+
+		nodeModel.setLoginPwd(autoUser.getAgentPwd());
+		nodeModel.setLoginName(autoUser.getAgentName());
+
+		nodeModel.setOpenStatus(true);
+		nodeModel.setTimeOut(10);
+		nodeService.addItem(nodeModel);
+		Console.log("自动添加本机节点成功：" + nodeModel.getId());
+	}
 }
