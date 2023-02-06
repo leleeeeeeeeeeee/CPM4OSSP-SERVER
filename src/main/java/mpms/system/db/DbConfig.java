@@ -1,4 +1,4 @@
-package io.jpom.system.db;
+package mpms.system.db;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.thread.ThreadUtil;
