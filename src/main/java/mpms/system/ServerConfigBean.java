@@ -108,6 +108,21 @@ public class ServerConfigBean {
 		return serverConfigBean;
 	}
 
+	/**
+	 * 获取当前登录用户的临时文件存储路径，如果没有登录则抛出异常
+	 *
+	 * @return file
+	 */
+	public File getUserTempPath() {
+		File file = ConfigBean.getInstance().getTempPath();
+		UserModel userModel = BaseServerController.getUserModel();
+		if (userModel == null) {
+			throw new LinuxRuntimeException("没有登录");
+		}
+		file = FileUtil.file(file, userModel.getId());
+		FileUtil.mkdir(file);
+		return file;
+	}
 
 
 }
