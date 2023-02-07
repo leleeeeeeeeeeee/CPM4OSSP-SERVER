@@ -1,4 +1,4 @@
-package io.jpom.system;
+package mpms.system;
 
 import cn.jiangzeyin.common.JsonMessage;
 
