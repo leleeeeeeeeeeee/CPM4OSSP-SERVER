@@ -110,4 +110,8 @@ public class ServerExtConfigBean implements DisposableBean {
 		return Math.max(this.uploadFileTimeOut, 5) * 1000;
 	}
 
+	public String getSshInitEnv() {
+		return StrUtil.emptyToDefault(this.sshInitEnv, "source /etc/profile && source ~/.bash_profile && source ~/.bashrc");
+	}
+
 }
