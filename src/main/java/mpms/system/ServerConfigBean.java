@@ -96,6 +96,18 @@ public class ServerConfigBean {
 
 	private static ServerConfigBean serverConfigBean;
 
+	/**
+	 * 单利模式
+	 *
+	 * @return config
+	 */
+	public static ServerConfigBean getInstance() {
+		if (serverConfigBean == null) {
+			serverConfigBean = SpringUtil.getBean(ServerConfigBean.class);
+		}
+		return serverConfigBean;
+	}
+
 
 
 }
