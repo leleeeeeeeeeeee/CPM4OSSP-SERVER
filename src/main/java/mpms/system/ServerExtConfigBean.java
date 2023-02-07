@@ -114,4 +114,9 @@ public class ServerExtConfigBean implements DisposableBean {
 		return StrUtil.emptyToDefault(this.sshInitEnv, "source /etc/profile && source ~/.bash_profile && source ~/.bashrc");
 	}
 
+	public String getAuthorizeToken() {
+		return authorizeToken;
+	}
+
+
 }
