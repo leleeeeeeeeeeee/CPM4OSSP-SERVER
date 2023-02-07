@@ -1,4 +1,4 @@
-package io.jpom.system;
+package mpms.system;
 
 import cn.jiangzeyin.common.JsonMessage;
 
@@ -11,5 +11,9 @@ public class AuthorizeException extends RuntimeException {
 	public AuthorizeException(JsonMessage<?> jsonMessage, String msg) {
 		super(msg);
 		this.jsonMessage = jsonMessage;
+	}
+
+	public JsonMessage<?> getJsonMessage() {
+		return jsonMessage;
 	}
 }
