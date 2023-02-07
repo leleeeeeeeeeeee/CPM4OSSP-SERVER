@@ -95,5 +95,19 @@ public class ServerExtConfigBean implements DisposableBean {
 	@Value("${node.uploadFileTimeOut:300}")
 	private int uploadFileTimeOut;
 
+	/**
+	 * 前端接口 超时时间 单位秒
+	 */
+	@Value("${mpms.webApiTimeout:20}")
+	private int webApiTimeout;
+
+	/**
+	 * 获取上传文件超时时间
+	 *
+	 * @return 返回毫秒
+	 */
+	public int getUploadFileTimeOut() {
+		return Math.max(this.uploadFileTimeOut, 5) * 1000;
+	}
 
 }
