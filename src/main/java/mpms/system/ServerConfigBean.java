@@ -13,5 +13,89 @@ import java.io.File;
  */
 @Configuration
 public class ServerConfigBean {
+	/**
+	 * 用户数据文件
+	 */
+	public static final String USER = "user.json";
+
+	/**
+	 * 节点数据文件
+	 */
+	public static final String NODE = "node.json";
+
+	/**
+	 * Agent信息文件
+	 */
+	public static final String AGENT_FILE = "agent_file.json";
+
+	/**
+	 * 分发数据文件
+	 */
+	public static final String OUTGIVING = "outgiving.json";
+
+	/**
+	 * 白名单数据
+	 */
+	public static final String OUTGIVING_WHITELIST = "outgiving_whitelist.json";
+
+	/**
+	 * 分发包存储路径
+	 */
+	public static final String OUTGIVING_FILE = "outgiving";
+
+	/**
+	 * 项目监控文件
+	 */
+	public static final String MONITOR_FILE = "monitor.json";
+
+	/**
+	 * 监控用户操作文件
+	 */
+	public static final String MONITOR_USER_OPT_FILE = "monitor_user_opt.json";
+
+	/**
+	 * 邮箱配置
+	 */
+	public static final String MAIL_CONFIG = "mail_config.json";
+
+	/**
+	 * 构建数据
+	 */
+	@Deprecated
+	public static final String BUILD = "build.json";
+
+	/**
+	 * 第一次服务端安装信息
+	 */
+	public static final String INSTALL = "INSTALL.json";
+
+	/**
+	 * ssh信息
+	 */
+	public static final String SSH_LIST = "ssh_list.json";
+
+	/**
+	 * 用户角色信息
+	 */
+	public static final String ROLE = "user_role.json";
+
+	/**
+	 * ip配置
+	 */
+	public static final String IP_CONFIG = "ip_config.json";
+
+	/**
+	 * token自动续签状态码
+	 */
+	public static final int RENEWAL_AUTHORIZE_CODE = 801;
+
+	/**
+	 * token 失效
+	 */
+	public static final int AUTHORIZE_TIME_OUT_CODE = 800;
+
+	private static ServerConfigBean serverConfigBean;
+
+
 
 }
