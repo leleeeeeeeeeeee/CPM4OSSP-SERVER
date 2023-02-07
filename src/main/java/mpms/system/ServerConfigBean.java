@@ -1,9 +1,9 @@
-package io.jpom.system;
+package mpms.system;
 
 import cn.hutool.core.io.FileUtil;
 import cn.jiangzeyin.common.spring.SpringUtil;
-import io.jpom.common.BaseServerController;
-import io.jpom.model.data.UserModel;
+import mpms.common.BaseServerController;
+import mpms.model.data.UserModel;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
