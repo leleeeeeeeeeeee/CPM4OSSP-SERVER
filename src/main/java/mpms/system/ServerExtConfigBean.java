@@ -118,5 +118,12 @@ public class ServerExtConfigBean implements DisposableBean {
 		return authorizeToken;
 	}
 
+	public long getIpErrorLockTime() {
+		if (this.ipErrorLockTimeValue == -1) {
+			String str = StrUtil.emptyToDefault(this.ipErrorLockTime, "60*60*5*1000");
+			this.ipErrorLockTimeValue = Convert.toLong(ScriptUtil.eval(str), TimeUnit.HOURS.toMillis(5));
+		}
+		return this.ipErrorLockTimeValue;
+	}
 
 }
