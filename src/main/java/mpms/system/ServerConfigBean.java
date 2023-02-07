@@ -125,4 +125,15 @@ public class ServerConfigBean {
 	}
 
 
+	/**
+	 * 获取保存 agent jar 包目录文件夹
+	 *
+	 * @return 数据目录下的 agent 目录
+	 */
+	public File getAgentPath() {
+		File file = new File(ConfigBean.getInstance().getDataPath());
+		file = new File(file.getPath() + "/agent/");
+		FileUtil.mkdir(file);
+		return file;
+	}
 }
