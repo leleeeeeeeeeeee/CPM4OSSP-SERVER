@@ -146,4 +146,8 @@ public class ServerExtConfigBean implements DisposableBean {
 		return StrUtil.emptyToDefault(this.dbUserName, DbConfig.DEFAULT_USER_OR_PWD);
 	}
 
+	public String getDbUserPwd() {
+		return StrUtil.emptyToDefault(this.dbUserPwd, DbConfig.DEFAULT_USER_OR_PWD);
+	}
+
 }
