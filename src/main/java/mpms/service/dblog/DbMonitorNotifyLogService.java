@@ -25,4 +25,24 @@ public class DbMonitorNotifyLogService extends BaseDbCommonService<MonitorNotify
 		//
 		DbConfig.autoClear(getTableName(), "createTime");
 	}
+
+
+	/**
+	 * 修改执行结果
+	 *
+	 * @param logId    通知id
+	 * @param status   状态
+	 * @param errorMsg 错误消息
+	 */
+	public void updateStatus(String logId, boolean status, String errorMsg) {
+		Entity entity = new Entity();
+		entity.set("notifyStatus", status);
+		if (errorMsg != null) {
+			entity.set("notifyError", errorMsg);
+		}
+
+		Entity where = new Entity();
+		where.set("logId", logId);
+		super.update(entity, where);
+	}
 }
