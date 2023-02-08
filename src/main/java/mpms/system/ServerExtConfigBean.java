@@ -150,4 +150,17 @@ public class ServerExtConfigBean implements DisposableBean {
 		return StrUtil.emptyToDefault(this.dbUserPwd, DbConfig.DEFAULT_USER_OR_PWD);
 	}
 
+	public byte[] getAuthorizeKey() {
+		return StrUtil.emptyToDefault(this.authorizeKey, "KZQfFBJTW2v6obS1").getBytes();
+	}
+
+	/**
+	 * 最小值 10秒
+	 *
+	 * @return 超时时间（单位秒）
+	 */
+	public int getWebApiTimeout() {
+		return Math.max(this.webApiTimeout, 10);
+	}
+
 }
