@@ -172,4 +172,12 @@ public class ServerExtConfigBean implements DisposableBean {
 		return SpringUtil.getBean(ServerExtConfigBean.class);
 	}
 
+	@Override
+	public void destroy() throws Exception {
+		try {
+			Git.shutdown();
+		} catch (Exception e) {
+			Console.error(e.getMessage());
+		}
+	}
 }
