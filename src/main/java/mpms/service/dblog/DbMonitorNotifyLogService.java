@@ -1,9 +1,9 @@
-package io.jpom.service.dblog;
+package mpms.service.dblog;
 
 import cn.hutool.db.Entity;
-import io.jpom.model.log.MonitorNotifyLog;
-import io.jpom.service.h2db.BaseDbCommonService;
-import io.jpom.system.db.DbConfig;
+import mpms.model.log.MonitorNotifyLog;
+import mpms.service.h2db.BaseDbCommonService;
+import mpms.system.db.DbConfig;
 import org.springframework.stereotype.Service;
 
 /**
