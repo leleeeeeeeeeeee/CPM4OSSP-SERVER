@@ -129,4 +129,8 @@ public class ServerExtConfigBean implements DisposableBean {
 	public int getBuildMaxHistoryCount() {
 		return buildMaxHistoryCount;
 	}
+
+	public int getBuildItemMaxHistoryCount() {
+		return buildItemMaxHistoryCount;
+	}
 }
