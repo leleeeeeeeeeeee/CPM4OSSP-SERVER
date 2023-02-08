@@ -163,4 +163,13 @@ public class ServerExtConfigBean implements DisposableBean {
 		return Math.max(this.webApiTimeout, 10);
 	}
 
+	/**
+	 * 单例
+	 *
+	 * @return this
+	 */
+	public static ServerExtConfigBean getInstance() {
+		return SpringUtil.getBean(ServerExtConfigBean.class);
+	}
+
 }
