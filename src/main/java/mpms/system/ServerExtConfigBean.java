@@ -1,11 +1,11 @@
-package io.jpom.system;
+package mpms.system;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.script.ScriptUtil;
 import cn.jiangzeyin.common.spring.SpringUtil;
-import io.jpom.system.db.DbConfig;
+import mpms.system.db.DbConfig;
 import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
