@@ -142,6 +142,8 @@ public class ServerExtConfigBean implements DisposableBean {
 		return authorizeRenewal;
 	}
 
-
+	public String getDbUserName() {
+		return StrUtil.emptyToDefault(this.dbUserName, DbConfig.DEFAULT_USER_OR_PWD);
+	}
 
 }
