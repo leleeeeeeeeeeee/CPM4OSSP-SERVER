@@ -126,4 +126,7 @@ public class ServerExtConfigBean implements DisposableBean {
 		return this.ipErrorLockTimeValue;
 	}
 
+	public int getBuildMaxHistoryCount() {
+		return buildMaxHistoryCount;
+	}
 }
