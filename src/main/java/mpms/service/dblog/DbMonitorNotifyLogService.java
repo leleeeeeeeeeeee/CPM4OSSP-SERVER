@@ -15,4 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbMonitorNotifyLogService extends BaseDbCommonService<MonitorNotifyLog> {
 
+	public DbMonitorNotifyLogService() {
+		super(MonitorNotifyLog.TABLE_NAME, "logId", MonitorNotifyLog.class);
+	}
+
 }
