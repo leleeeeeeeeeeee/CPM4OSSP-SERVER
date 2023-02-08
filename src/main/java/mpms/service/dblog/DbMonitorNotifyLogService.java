@@ -19,4 +19,10 @@ public class DbMonitorNotifyLogService extends BaseDbCommonService<MonitorNotify
 		super(MonitorNotifyLog.TABLE_NAME, "logId", MonitorNotifyLog.class);
 	}
 
+	@Override
+	public void insert(MonitorNotifyLog monitorNotifyLog) {
+		super.insert(monitorNotifyLog);
+		//
+		DbConfig.autoClear(getTableName(), "createTime");
+	}
 }
