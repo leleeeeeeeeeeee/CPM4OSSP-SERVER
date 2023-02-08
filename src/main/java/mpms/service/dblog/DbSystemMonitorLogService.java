@@ -9,4 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbSystemMonitorLogService extends BaseDbCommonService<SystemMonitorLog> {
 
+	public DbSystemMonitorLogService() {
+		super(SystemMonitorLog.TABLE_NAME, "id", SystemMonitorLog.class);
+	}
+
 }
