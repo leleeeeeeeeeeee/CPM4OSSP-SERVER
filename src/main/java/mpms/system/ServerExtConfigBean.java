@@ -137,4 +137,11 @@ public class ServerExtConfigBean implements DisposableBean {
 	public int getAuthorizeExpired() {
 		return authorizeExpired;
 	}
+
+	public int getAuthorizeRenewal() {
+		return authorizeRenewal;
+	}
+
+
+
 }
