@@ -133,4 +133,8 @@ public class ServerExtConfigBean implements DisposableBean {
 	public int getBuildItemMaxHistoryCount() {
 		return buildItemMaxHistoryCount;
 	}
+
+	public int getAuthorizeExpired() {
+		return authorizeExpired;
+	}
 }
