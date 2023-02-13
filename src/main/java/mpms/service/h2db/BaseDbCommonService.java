@@ -89,4 +89,25 @@ public abstract class BaseDbCommonService<T> {
 			throw new LinuxRuntimeException("数据库异常", e);
 		}
 	}
+
+	/**
+	 * 插入数据
+	 *
+	 * @param t 数据
+	 */
+	public void insert(Collection<T> t) {
+		if (!DbConfig.getInstance().isInit() || CollUtil.isEmpty(t)) {
+			// ignore
+			return;
+		}
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		try {
+			List<Entity> entities = t.stream().map(this::dataBeanToEntity).collect(Collectors.toList());
+			db.insert(entities);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+	}
+
 }
