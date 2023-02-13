@@ -48,4 +48,11 @@ public abstract class BaseDbCommonService<T> {
 		this.key = key;
 	}
 
+	@SuppressWarnings("unchecked")
+	public BaseDbCommonService(String tableName, String key) {
+		this.tClass = (Class<T>) TypeUtil.getTypeArgument(this.getClass());
+		this.tableName = this.covetTableName(tableName, this.tClass);
+		this.key = key;
+	}
+
 }
