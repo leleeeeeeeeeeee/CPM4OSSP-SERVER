@@ -55,4 +55,15 @@ public abstract class BaseDbCommonService<T> {
 		this.key = key;
 	}
 
+	/**
+	 * 转换表面
+	 *
+	 * @param tableName 表面
+	 * @param tClass    类
+	 * @return 转换后的表名
+	 */
+	protected String covetTableName(String tableName, Class<T> tClass) {
+		return tableName;
+	}
+
 }
