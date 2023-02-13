@@ -155,5 +155,34 @@ public abstract class BaseDbCommonService<T> {
 		return 0;
 	}
 
+	/**
+	 * 修改数据
+	 *
+	 * @param entity 要修改的数据
+	 * @param where  条件
+	 * @return 影响行数
+	 */
+	public int update(Entity entity, Entity where) {
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return 0;
+		}
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		if (where.isEmpty()) {
+			throw new LinuxRuntimeException("没有更新条件");
+		}
+		entity.setTableName(tableName);
+		where.setTableName(tableName);
+		try {
+			return db.update(entity, where);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+	}
+
+
+
+
 
 }
