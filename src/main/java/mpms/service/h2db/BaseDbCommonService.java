@@ -32,4 +32,14 @@ public abstract class BaseDbCommonService<T> {
 		PageUtil.setFirstPageNo(1);
 	}
 
+	/**
+	 * 表名
+	 */
+	protected final String tableName;
+	protected final Class<T> tClass;
+	/**
+	 * 主键
+	 */
+	protected final String key;
+
 }
