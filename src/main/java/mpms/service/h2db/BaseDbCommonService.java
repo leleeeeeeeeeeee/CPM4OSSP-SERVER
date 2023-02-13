@@ -145,5 +145,15 @@ public abstract class BaseDbCommonService<T> {
 		}
 	}
 
+	/**
+	 * 修改数据，需要自行实现
+	 *
+	 * @param t 数据
+	 * @return 影响行数
+	 */
+	public int update(T t) {
+		return 0;
+	}
+
 
 }
