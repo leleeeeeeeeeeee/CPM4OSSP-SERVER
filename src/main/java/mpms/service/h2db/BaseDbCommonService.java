@@ -42,4 +42,10 @@ public abstract class BaseDbCommonService<T> {
 	 */
 	protected final String key;
 
+	public BaseDbCommonService(String tableName, String key, Class<T> tClass) {
+		this.tableName = this.covetTableName(tableName, tClass);
+		this.tClass = tClass;
+		this.key = key;
+	}
+
 }
