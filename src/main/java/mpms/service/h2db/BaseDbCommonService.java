@@ -27,5 +27,9 @@ import java.util.stream.Collectors;
  */
 public abstract class BaseDbCommonService<T> {
 
+	static {
+		// 配置页码是从 1 开始
+		PageUtil.setFirstPageNo(1);
+	}
 
 }
