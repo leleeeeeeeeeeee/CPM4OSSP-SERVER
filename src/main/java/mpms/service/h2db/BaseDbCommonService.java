@@ -110,4 +110,18 @@ public abstract class BaseDbCommonService<T> {
 		}
 	}
 
+	/**
+	 * 实体转 entity
+	 *
+	 * @param data 实体对象
+	 * @return entity
+	 */
+	protected Entity dataBeanToEntity(T data) {
+		Entity entity = new Entity(tableName);
+		// 转换为 map
+		Map<String, Object> beanToMap = BeanUtil.beanToMap(data, new LinkedHashMap<>(), true, s -> StrUtil.format("`{}`", s));
+		entity.putAll(beanToMap);
+		return entity;
+	}
+
 }
