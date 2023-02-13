@@ -70,5 +70,7 @@ public abstract class BaseDbCommonService<T> {
 		return tableName;
 	}
 
-
+	protected String getKey() {
+		return key;
+	}
 }
