@@ -124,4 +124,26 @@ public abstract class BaseDbCommonService<T> {
 		return entity;
 	}
 
+	/**
+	 * 插入数据
+	 *
+	 * @param entity 要修改的数据
+	 * @return 影响行数
+	 */
+	public int insert(Entity entity) {
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return 0;
+		}
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		entity.setTableName(tableName);
+		try {
+			return db.insert(entity);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+	}
+
+
 }
