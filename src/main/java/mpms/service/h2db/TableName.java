@@ -14,4 +14,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableName {
 
+	/**
+	 * 表名
+	 *
+	 * @return tableName
+	 */
+	String value();
 }
