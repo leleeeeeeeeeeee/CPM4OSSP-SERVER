@@ -245,5 +245,29 @@ public abstract class BaseDbCommonService<T> {
 		return del(where);
 	}
 
+	/**
+	 * 根据条件删除
+	 *
+	 * @param where 条件
+	 * @return 影响行数
+	 */
+	public int del(Entity where) {
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return 0;
+		}
+		where.setTableName(tableName);
+		if (where.isEmpty()) {
+			throw new LinuxRuntimeException("没有删除条件");
+		}
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		try {
+			return db.del(where);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+	}
+
 
 }
