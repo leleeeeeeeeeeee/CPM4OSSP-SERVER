@@ -226,5 +226,24 @@ public abstract class BaseDbCommonService<T> {
 		return BeanUtil.toBean(entity, rClass, copyOptions);
 	}
 
+	/**
+	 * 根据主键生成
+	 *
+	 * @param keyValue 主键值
+	 * @return 影响行数
+	 */
+	public int delByKey(String keyValue) {
+		if (StrUtil.isEmpty(keyValue)) {
+			return 0;
+		}
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return 0;
+		}
+		Entity where = new Entity(tableName);
+		where.set(key, keyValue);
+		return del(where);
+	}
+
 
 }
