@@ -181,8 +181,32 @@ public abstract class BaseDbCommonService<T> {
 		}
 	}
 
-
-
+	/**
+	 * 根据主键查询实体
+	 *
+	 * @param keyValue 主键值
+	 * @return 数据
+	 */
+	public T getByKey(String keyValue) {
+		if (StrUtil.isEmpty(keyValue)) {
+			return null;
+		}
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return null;
+		}
+		Entity where = new Entity(tableName);
+		where.set(key, keyValue);
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		Entity entity;
+		try {
+			entity = db.get(where);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+		return this.entityToBean(entity, this.tClass);
+	}
 
 
 }
