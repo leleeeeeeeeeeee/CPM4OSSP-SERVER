@@ -40,4 +40,7 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 	@Resource
 	private NodeService nodeService;
 
+	public SshService() {
+		super(ServerConfigBean.SSH_LIST);
+	}
 }
