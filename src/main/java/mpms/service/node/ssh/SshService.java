@@ -1,4 +1,4 @@
-package io.jpom.service.node.ssh;
+package mpms.service.node.ssh;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
@@ -14,16 +14,16 @@ import cn.hutool.extra.ssh.Sftp;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jcraft.jsch.*;
-import io.jpom.common.BaseOperService;
-import io.jpom.model.data.NodeModel;
-import io.jpom.model.data.SshModel;
-import io.jpom.permission.BaseDynamicService;
-import io.jpom.plugin.ClassFeature;
-import io.jpom.service.node.NodeService;
-import io.jpom.system.ConfigBean;
-import io.jpom.system.LinuxRuntimeException;
-import io.jpom.system.ServerConfigBean;
-import io.jpom.system.ServerExtConfigBean;
+import mpms.common.BaseOperService;
+import mpms.model.data.NodeModel;
+import mpms.model.data.SshModel;
+import mpms.permission.BaseDynamicService;
+import mpms.plugin.ClassFeature;
+import mpms.service.node.NodeService;
+import mpms.system.ConfigBean;
+import mpms.system.LinuxRuntimeException;
+import mpms.system.ServerConfigBean;
+import mpms.system.ServerExtConfigBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
