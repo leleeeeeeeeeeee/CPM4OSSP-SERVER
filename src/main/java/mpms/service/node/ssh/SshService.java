@@ -37,4 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 public class SshService extends BaseOperService<SshModel> implements BaseDynamicService {
 
+	@Resource
+	private NodeService nodeService;
+
 }
