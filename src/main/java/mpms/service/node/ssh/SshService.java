@@ -112,4 +112,50 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		return session;
 
 	}
+
+	/**
+	 * 检查是否存在正在运行的进程
+	 *
+	 * @param sshModel ssh
+	 * @param tag      标识
+	 * @return true 存在运行中的
+	 * @throws IOException   IO
+	 * @throws JSchException jsch
+	 */
+	public boolean checkSshRun(SshModel sshModel, String tag) throws IOException, JSchException {
+		String ps = StrUtil.format("ps -ef | grep -v 'grep' | egrep {}", tag);
+		Session session = null;
+		ChannelExec channel = null;
+		try {
+			session = getSession(sshModel);
+			channel = (ChannelExec) JschUtil.createChannel(session, ChannelType.EXEC);
+			channel.setCommand(ps);
+			InputStream inputStream = channel.getInputStream();
+			InputStream errStream = channel.getErrStream();
+			channel.connect();
+			Charset charset = sshModel.getCharsetT();
+			// 运行中
+			AtomicBoolean run = new AtomicBoolean(false);
+			IoUtil.readLines(inputStream, charset, (LineHandler) s -> {
+				run.set(true);
+			});
+			if (run.get()) {
+				return true;
+			}
+			run.set(false);
+			AtomicReference<String> error = new AtomicReference<>();
+			IoUtil.readLines(errStream, charset, (LineHandler) s -> {
+				run.set(true);
+				error.set(s);
+			});
+			if (run.get()) {
+				throw new LinuxRuntimeException("检查异常:" + error.get());
+			}
+		} finally {
+			JschUtil.close(channel);
+			JschUtil.close(session);
+		}
+		return false;
+	}
+
 }
