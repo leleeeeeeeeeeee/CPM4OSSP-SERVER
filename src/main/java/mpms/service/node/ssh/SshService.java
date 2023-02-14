@@ -54,4 +54,10 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 	public JSONArray listToArray(String dataId) {
 		return (JSONArray) JSONArray.toJSON(this.list());
 	}
+
+	@Override
+	public List<SshModel> list() {
+		return (List<SshModel>) filter(super.list(), ClassFeature.SSH);
+	}
+
 }
