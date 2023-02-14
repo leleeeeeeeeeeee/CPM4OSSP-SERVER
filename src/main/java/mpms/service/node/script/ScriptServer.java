@@ -27,4 +27,8 @@ public class ScriptServer implements BaseDynamicService {
 		return listToArray(item);
 	}
 
+	public JSONArray listToArray(NodeModel nodeModel) {
+		JSONArray jsonArray = NodeForward.requestData(nodeModel, NodeUrl.Script_List, null, JSONArray.class);
+		return filter(jsonArray, ClassFeature.SCRIPT);
+	}
 }
