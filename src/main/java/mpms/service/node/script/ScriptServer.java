@@ -1,12 +1,12 @@
-package io.jpom.service.node.script;
+package mpms.service.node.script;
 
 import com.alibaba.fastjson.JSONArray;
-import io.jpom.common.forward.NodeForward;
-import io.jpom.common.forward.NodeUrl;
-import io.jpom.model.data.NodeModel;
-import io.jpom.permission.BaseDynamicService;
-import io.jpom.plugin.ClassFeature;
-import io.jpom.service.node.NodeService;
+import mpms.common.forward.NodeForward;
+import mpms.common.forward.NodeUrl;
+import mpms.model.data.NodeModel;
+import mpms.permission.BaseDynamicService;
+import mpms.plugin.ClassFeature;
+import mpms.service.node.NodeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
