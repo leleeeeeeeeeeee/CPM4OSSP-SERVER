@@ -207,4 +207,22 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		}
 	}
 
+	/**
+	 * 执行命令
+	 *
+	 * @param sshModel ssh
+	 * @param command  命令
+	 * @return 结果
+	 * @throws IOException   io
+	 * @throws JSchException jsch
+	 */
+	public String exec(SshModel sshModel, String command) throws IOException, JSchException {
+		Session session = null;
+		try {
+			session = getSession(sshModel);
+			return exec(session, sshModel.getCharsetT(), command);
+		} finally {
+			JschUtil.close(session);
+		}
+	}
 }
