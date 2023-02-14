@@ -43,4 +43,11 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 	public SshService() {
 		super(ServerConfigBean.SSH_LIST);
 	}
+
+	@Override
+	public void addItem(SshModel sshModel) {
+		sshModel.setId(IdUtil.fastSimpleUUID());
+		super.addItem(sshModel);
+	}
+
 }
