@@ -1,4 +1,4 @@
-package io.jpom.service.h2db;
+package mpms.service.h2db;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -10,8 +10,8 @@ import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import cn.hutool.db.Page;
 import cn.hutool.db.PageResult;
-import io.jpom.system.LinuxRuntimeException;
-import io.jpom.system.db.DbConfig;
+import mpms.system.LinuxRuntimeException;
+import mpms.system.db.DbConfig;
 
 import java.sql.SQLException;
 import java.util.Collection;
