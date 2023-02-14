@@ -208,5 +208,23 @@ public abstract class BaseDbCommonService<T> {
 		return this.entityToBean(entity, this.tClass);
 	}
 
+	/**
+	 * entity 转 实体
+	 *
+	 * @param entity Entity
+	 * @param rClass 实体类
+	 * @param <R>    乏型
+	 * @return data
+	 */
+	private <R> R entityToBean(Entity entity, Class<R> rClass) {
+		if (entity == null) {
+			return null;
+		}
+		CopyOptions copyOptions = new CopyOptions();
+		copyOptions.setIgnoreError(true);
+		copyOptions.setIgnoreCase(true);
+		return BeanUtil.toBean(entity, rClass, copyOptions);
+	}
+
 
 }
