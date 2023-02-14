@@ -15,4 +15,7 @@ import javax.annotation.Resource;
 @Service
 public class ScriptServer implements BaseDynamicService {
 
+	@Resource
+	private NodeService nodeService;
+
 }
