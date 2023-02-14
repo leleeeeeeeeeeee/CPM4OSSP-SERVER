@@ -60,4 +60,29 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		return (List<SshModel>) filter(super.list(), ClassFeature.SSH);
 	}
 
+	public JSONArray listSelect(String nodeId) {
+		// 查询ssh
+		List<SshModel> sshModels = list();
+		List<NodeModel> list = nodeService.list();
+		JSONArray sshList = new JSONArray();
+		if (sshModels == null) {
+			return sshList;
+		}
+		sshModels.forEach(sshModel -> {
+			String sshModelId = sshModel.getId();
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("id", sshModelId);
+			jsonObject.put("name", sshModel.getName());
+			if (list != null) {
+				for (NodeModel nodeModel : list) {
+					if (!StrUtil.equals(nodeId, nodeModel.getId()) && StrUtil.equals(sshModelId, nodeModel.getSshId())) {
+						jsonObject.put("disabled", true);
+						break;
+					}
+				}
+			}
+			sshList.add(jsonObject);
+		});
+		return sshList;
+	}
 }
