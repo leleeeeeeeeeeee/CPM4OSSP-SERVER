@@ -245,4 +245,25 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		}
 	}
 
+	/**
+	 * 上传文件
+	 *
+	 * @param sshModel   ssh
+	 * @param remotePath 远程路径
+	 * @param desc       文件夹或者文件
+	 */
+	public void uploadDir(SshModel sshModel, String remotePath, File desc) {
+		Session session = null;
+		ChannelSftp channel = null;
+		try {
+			session = getSession(sshModel);
+			channel = (ChannelSftp) JschUtil.openChannel(session, ChannelType.SFTP);
+			Sftp sftp = new Sftp(channel, sshModel.getCharsetT());
+			sftp.syncUpload(desc, remotePath);
+		} finally {
+			JschUtil.close(channel);
+			JschUtil.close(session);
+		}
+	}
+
 }
