@@ -225,4 +225,24 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 			JschUtil.close(session);
 		}
 	}
+
+	private String exec(Session session, Charset charset, String command) throws IOException, JSchException {
+		ChannelExec channel = null;
+		try {
+			channel = (ChannelExec) JschUtil.createChannel(session, ChannelType.EXEC);
+			// 添加环境变量
+			channel.setCommand(ServerExtConfigBean.getInstance().getSshInitEnv() + " && " + command);
+			InputStream inputStream = channel.getInputStream();
+			InputStream errStream = channel.getErrStream();
+			channel.connect();
+			// 读取结果
+			String result = IoUtil.read(inputStream, charset);
+			//
+			String error = IoUtil.read(errStream, charset);
+			return result + error;
+		} finally {
+			JschUtil.close(channel);
+		}
+	}
+
 }
