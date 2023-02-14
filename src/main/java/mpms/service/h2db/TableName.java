@@ -1,4 +1,4 @@
-package io.jpom.service.h2db;
+package mpms.service.h2db;
 
 import java.lang.annotation.*;
 
