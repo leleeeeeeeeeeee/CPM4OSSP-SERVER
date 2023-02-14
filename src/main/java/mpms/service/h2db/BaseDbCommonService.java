@@ -327,4 +327,19 @@ public abstract class BaseDbCommonService<T> {
 		return pageResult1;
 	}
 
+	/**
+	 * sql 查询
+	 *
+	 * @param sql    sql 语句
+	 * @param params 参数
+	 * @return list
+	 */
+	public List<Entity> query(String sql, Object... params) {
+		try {
+			return Db.use().query(sql, params);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+	}
+
 }
