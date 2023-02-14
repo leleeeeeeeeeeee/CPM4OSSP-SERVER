@@ -50,4 +50,8 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		super.addItem(sshModel);
 	}
 
+	@Override
+	public JSONArray listToArray(String dataId) {
+		return (JSONArray) JSONArray.toJSON(this.list());
+	}
 }
