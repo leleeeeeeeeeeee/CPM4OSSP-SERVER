@@ -303,6 +303,28 @@ public abstract class BaseDbCommonService<T> {
 		return count > 0;
 	}
 
+	/**
+	 * 分页查询
+	 *
+	 * @param where 条件
+	 * @param page  分页
+	 * @return 结果
+	 */
+	public PageResult<T> listPage(Entity where, Page page) {
+		where.setTableName(getTableName());
+		PageResult<Entity> pageResult;
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		try {
+			pageResult = db.page(where, page);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
 
+		List<T> list = pageResult.stream().map(entity -> this.entityToBean(entity, this.tClass)).collect(Collectors.toList());
+		PageResult<T> pageResult1 = new PageResult<>(pageResult.getPage(), pageResult.getPageSize(), pageResult.getTotal());
+		pageResult1.addAll(list);
+		return pageResult1;
+	}
 
 }
