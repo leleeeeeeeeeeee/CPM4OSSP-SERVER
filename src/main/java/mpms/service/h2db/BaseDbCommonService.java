@@ -280,4 +280,29 @@ public abstract class BaseDbCommonService<T> {
 		return this.exists(entity);
 	}
 
+	/**
+	 * 判断是否存在
+	 *
+	 * @param where 条件
+	 * @return true 存在
+	 */
+	public boolean exists(Entity where) {
+		if (!DbConfig.getInstance().isInit()) {
+			// ignore
+			return false;
+		}
+		where.setTableName(getTableName());
+		Db db = Db.use();
+		db.setWrapper((Character) null);
+		long count;
+		try {
+			count = db.count(where);
+		} catch (SQLException e) {
+			throw new LinuxRuntimeException("数据库异常", e);
+		}
+		return count > 0;
+	}
+
+
+
 }
