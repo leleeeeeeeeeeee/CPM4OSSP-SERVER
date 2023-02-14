@@ -85,4 +85,31 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		});
 		return sshList;
 	}
+
+	public static Session getSession(SshModel sshModel) {
+		Session session;
+		if (sshModel.getConnectType() == SshModel.ConnectType.PASS) {
+			session = JschUtil.openSession(sshModel.getHost(), sshModel.getPort(), sshModel.getUser(), sshModel.getPassword());
+
+		} else if (sshModel.getConnectType() == SshModel.ConnectType.PUBKEY) {
+			File tempPath = ConfigBean.getInstance().getTempPath();
+			String sshFile = StrUtil.emptyToDefault(sshModel.getId(), IdUtil.fastSimpleUUID());
+			File ssh = FileUtil.file(tempPath, "ssh", sshFile);
+			FileUtil.writeString(sshModel.getPrivateKey(), ssh, CharsetUtil.UTF_8);
+			byte[] pas = null;
+			if (StrUtil.isNotEmpty(sshModel.getPassword())) {
+				pas = sshModel.getPassword().getBytes();
+			}
+			session = JschUtil.openSession(sshModel.getHost(), sshModel.getPort(), sshModel.getUser(), FileUtil.getAbsolutePath(ssh), pas);
+		} else {
+			throw new IllegalArgumentException("不支持的模式");
+		}
+		try {
+			session.setServerAliveInterval((int) TimeUnit.SECONDS.toMillis(5));
+			session.setServerAliveCountMax(5);
+		} catch (JSchException ignored) {
+		}
+		return session;
+
+	}
 }
