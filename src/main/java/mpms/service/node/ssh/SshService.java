@@ -158,4 +158,53 @@ public class SshService extends BaseOperService<SshModel> implements BaseDynamic
 		return false;
 	}
 
+	public String exec(SshModel sshModel, String... command) throws IOException {
+		if (ArrayUtil.isEmpty(command)) {
+			return "没有任何命令";
+		}
+		Session session = null;
+		InputStream sshExecTemplateInputStream = null;
+		Sftp sftp = null;
+		try {
+			File buildSsh = FileUtil.file(ConfigBean.getInstance().getTempPath(), "build_ssh", sshModel.getId() + ".sh");
+			sshExecTemplateInputStream = ResourceUtil.getStream("classpath:/bin/sshExecTemplate.sh");
+			String sshExecTemplate = IoUtil.readUtf8(sshExecTemplateInputStream);
+			StringBuilder stringBuilder = new StringBuilder(sshExecTemplate);
+			for (String s : command) {
+				stringBuilder.append(s).append(StrUtil.LF);
+			}
+			Charset charset = sshModel.getCharsetT();
+			FileUtil.writeString(stringBuilder.toString(), buildSsh, charset);
+			//
+			session = getSession(sshModel);
+			// 上传文件
+			sftp = new Sftp(session);
+			String home = sftp.home();
+			String path = home + "/.jpom/";
+			String destFile = path + IdUtil.fastSimpleUUID() + ".sh";
+			sftp.mkDirs(path);
+			sftp.upload(destFile, buildSsh);
+
+			// 执行命令
+			String exec, error;
+			try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
+				exec = JschUtil.exec(session, "sh " + destFile, charset, stream);
+				error = new String(stream.toByteArray(), charset);
+				if (StrUtil.isNotEmpty(error)) {
+					error = " 错误：" + error;
+				}
+			} finally {
+				try {
+					sftp.delFile(destFile);
+				} catch (Exception ignored) {
+				}
+			}
+			return exec + error;
+		} finally {
+			IoUtil.close(sftp);
+			IoUtil.close(sshExecTemplateInputStream);
+			JschUtil.close(session);
+		}
+	}
+
 }
