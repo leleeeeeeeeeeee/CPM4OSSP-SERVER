@@ -269,5 +269,15 @@ public abstract class BaseDbCommonService<T> {
 		}
 	}
 
+	/**
+	 * 判断是否存在
+	 *
+	 * @param data 实体
+	 * @return true 存在
+	 */
+	public boolean exists(T data) {
+		Entity entity = this.dataBeanToEntity(data);
+		return this.exists(entity);
+	}
 
 }
