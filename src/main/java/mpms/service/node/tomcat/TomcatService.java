@@ -143,4 +143,16 @@ public class TomcatService implements BaseDynamicService {
     public String delete(NodeModel nodeModel, HttpServletRequest request) {
         return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_Delete).toString();
     }
+
+    /**
+     * 获取文件列表
+     *
+     * @param nodeModel 节点信息
+     * @param request   请求信息
+     * @return 操作结果
+     */
+    public String getFileList(NodeModel nodeModel, HttpServletRequest request) {
+        return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_File_GetFileList).toString();
+    }
+
 }
