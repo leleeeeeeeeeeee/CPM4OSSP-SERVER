@@ -1,8 +1,8 @@
-package io.jpom.service.node;
+package mpms.service.node;
 
-import io.jpom.common.BaseOperService;
-import io.jpom.model.AgentFileModel;
-import io.jpom.system.ServerConfigBean;
+import mpms.common.BaseOperService;
+import mpms.model.AgentFileModel;
+import mpms.system.ServerConfigBean;
 import org.springframework.stereotype.Service;
 
 @Service
