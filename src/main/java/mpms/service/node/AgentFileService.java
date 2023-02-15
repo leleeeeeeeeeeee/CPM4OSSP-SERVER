@@ -8,4 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AgentFileService  extends BaseOperService<AgentFileModel> {
 
+    public AgentFileService() {
+        super(ServerConfigBean.AGENT_FILE);
+    }
 }
