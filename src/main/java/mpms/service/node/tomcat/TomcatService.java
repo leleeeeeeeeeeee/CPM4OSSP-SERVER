@@ -40,4 +40,15 @@ public class TomcatService implements BaseDynamicService {
         return filter(jsonArray, ClassFeature.TOMCAT);
     }
 
+    /**
+     * 查询tomcat信息
+     *
+     * @param nodeModel 节点信息
+     * @param id        tomcat的id
+     * @return tomcat的信息
+     */
+    public JSONObject getTomcatInfo(NodeModel nodeModel, String id) {
+        return NodeForward.requestData(nodeModel, NodeUrl.Tomcat_GetItem, JSONObject.class, "id", id);
+    }
+
 }
