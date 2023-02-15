@@ -23,5 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class TomcatService implements BaseDynamicService {
 
+    @Resource
+    private NodeService nodeService;
 
 }
