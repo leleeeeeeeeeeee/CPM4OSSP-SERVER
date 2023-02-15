@@ -166,4 +166,14 @@ public class TomcatService implements BaseDynamicService {
         return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_File_Upload).toString();
     }
 
+    /**
+     * 下载文件
+     *
+     * @param nodeModel 节点信息
+     * @param request   请求信息
+     * @param response  响应信息
+     */
+    public void download(NodeModel nodeModel, HttpServletRequest request, HttpServletResponse response) {
+        NodeForward.requestDownload(nodeModel, request, response, NodeUrl.Tomcat_File_Download);
+    }
 }
