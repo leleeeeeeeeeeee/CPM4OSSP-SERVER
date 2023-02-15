@@ -188,4 +188,14 @@ public class TomcatService implements BaseDynamicService {
         return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_File_DeleteFile).toString();
     }
 
+    /**
+     * 上传War包
+     *
+     * @param node         节点信息
+     * @param multiRequest 请求信息
+     * @return 操作结果
+     */
+    public String uploadWar(NodeModel node, MultipartHttpServletRequest multiRequest) {
+        return NodeForward.requestMultipart(node, multiRequest, NodeUrl.Tomcat_File_UploadWar).toString();
+    }
 }
