@@ -39,4 +39,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class NodeService extends BaseOperService<NodeModel> implements BaseDynamicService {
+	@Resource
+	private ProxyOperat proxyOperat;
+
+	@Resource
+	private MinisyslogService minisyslogService;
+
+	private static final TimedCache<String, List<NodeModel>> TIMED_CACHE = new TimedCache<>(TimeUnit.MINUTES.toMillis(5));
+
 }
