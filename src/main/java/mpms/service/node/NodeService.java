@@ -47,4 +47,10 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 
 	private static final TimedCache<String, List<NodeModel>> TIMED_CACHE = new TimedCache<>(TimeUnit.MINUTES.toMillis(5));
 
+
+	public NodeService() {
+		super(ServerConfigBean.NODE);
+	}
+
+
 }
