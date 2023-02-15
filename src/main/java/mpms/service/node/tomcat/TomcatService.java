@@ -55,4 +55,16 @@ public class TomcatService implements BaseDynamicService {
     public JSONArray getTomcatProjectList(NodeModel nodeModel, String id) {
         return NodeForward.requestData(nodeModel, NodeUrl.Tomcat_GetTomcatProjectList, JSONArray.class, "id", id);
     }
+
+    /**
+     * tomcat项目管理
+     *
+     * @param nodeModel 节点信息
+     * @param request   请求信息
+     * @return 操作结果
+     */
+    public String tomcatProjectManage(NodeModel nodeModel, HttpServletRequest request) {
+        return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_TomcatProjectManage).toString();
+    }
+
 }
