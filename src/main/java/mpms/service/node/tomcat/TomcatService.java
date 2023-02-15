@@ -100,4 +100,15 @@ public class TomcatService implements BaseDynamicService {
         return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_GetTomcatStatus).toString();
     }
 
+    /**
+     * 启动tomcat
+     *
+     * @param nodeModel 节点信息
+     * @param request   请求信息
+     * @return 操作结果
+     */
+    public String start(NodeModel nodeModel, HttpServletRequest request) {
+        return NodeForward.request(nodeModel, request, NodeUrl.Tomcat_Start).toString();
+    }
+
 }
