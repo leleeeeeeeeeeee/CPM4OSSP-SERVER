@@ -198,4 +198,13 @@ public class TomcatService implements BaseDynamicService {
     public String uploadWar(NodeModel node, MultipartHttpServletRequest multiRequest) {
         return NodeForward.requestMultipart(node, multiRequest, NodeUrl.Tomcat_File_UploadWar).toString();
     }
+
+    @Override
+    public JSONArray listToArray(String dataId) {
+        NodeModel item = nodeService.getItem(dataId);
+        if (item == null) {
+            return null;
+        }
+        return getTomcatList(item);
+    }
 }
