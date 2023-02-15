@@ -26,4 +26,18 @@ public class TomcatService implements BaseDynamicService {
     @Resource
     private NodeService nodeService;
 
+    /**
+     * 查询tomcat列表
+     *
+     * @param nodeModel 节点信息
+     * @return tomcat的信息
+     */
+    public JSONArray getTomcatList(NodeModel nodeModel) {
+        if (!nodeModel.isOpenStatus()) {
+            return null;
+        }
+        JSONArray jsonArray = NodeForward.requestData(nodeModel, NodeUrl.Tomcat_List, JSONArray.class, null, null);
+        return filter(jsonArray, ClassFeature.TOMCAT);
+    }
+
 }
