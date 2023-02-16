@@ -301,3 +301,9 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		return (JSONArray) JSONArray.toJSON(this.list());
 	}
 
+	@Override
+	public List<NodeModel> list() {
+		return (List<NodeModel>) filter(super.list(), ClassFeature.NODE);
+	}
+
+}
