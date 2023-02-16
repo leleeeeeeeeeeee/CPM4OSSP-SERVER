@@ -235,5 +235,31 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		}
 	}
 
+	/**
+	 * 测试URL是否可用
+	 * @param urlString
+	 * @param timeOutMillSeconds
+	 */
+	public static Boolean testUrl(String urlString,int timeOutMillSeconds){
+		URL url;
+		HttpURLConnection connection = null;
+		try {
+			url = new URL(urlString);
+			//创建连接
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setConnectTimeout(timeOutMillSeconds);
+			//开始连接
+			connection.connect();
+		} catch (Exception e1) {
+			return false;
+		}finally {
+			url = null;
+			if(connection!=null){
+				connection.disconnect();
+			}
+		}
+		return true;
+	}
+
 
 }
