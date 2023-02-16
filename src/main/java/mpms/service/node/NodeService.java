@@ -140,5 +140,54 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 	public List<NodeModel> getNodeModel(String id) {
 		return TIMED_CACHE.get(id);
 	}
-		
+
+	@SneakyThrows
+	public String addNode(NodeModel nodeModel, HttpServletRequest request) {
+        System.out.println("添加的节点信息： " + nodeModel.toString());
+		Pattern pattern = Pattern.compile("[0-9]*");
+		if ((!StringUtil.isGeneral(nodeModel.getId(), 2, 20))||(!pattern.matcher(nodeModel.getId()).matches())) {
+			return JsonMessage.getString(405, "节点id必须为2-20位纯数字");
+		}
+		if (getItem(nodeModel.getId()) != null) {
+			return JsonMessage.getString(405, "节点id已经存在啦");
+		}
+		String error = checkData(nodeModel);
+		if (error != null) {
+			return error;
+		}
+		// 补充日志信息
+		Minisyslog minisyslog = new Minisyslog();
+		minisyslog.setContent("Node information was added successfully.");
+		minisyslog.setLevel(0);
+		minisyslog.setType(0);
+		minisyslog.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		// 地址是否可达
+		Boolean isOpen = testUrl("http://"+nodeModel.getUrl()+"/node"+NodeUrl.SetTopCycle, 2000);
+		if(isOpen&&nodeModel.isOpenStatus()){
+			try {
+				NodeForward.request(nodeModel, request, NodeUrl.SetTopCycle);
+			}catch (Exception e){
+				return JsonMessage.getString(400, "帐号密码不正确");
+			}
+			minisyslog.setExtra("新增id为"+nodeModel.getId()+"的节点,当前节点状态为启用,节点地址为"+nodeModel.getUrl()+"！");
+			// 将该节点信息记录到数据库
+			addItem(nodeModel);
+			// 新增节点日志
+			minisyslogService.insert(minisyslog);
+			return JsonMessage.getString(200, "节点信息新增成功,并且节点可用");
+		}else{
+			minisyslog.setExtra("新增id为"+nodeModel.getId()+"的节点,当前节点状态为禁用,节点地址为"+nodeModel.getUrl()+"！");
+			// 设置不可用
+			nodeModel.setOpenStatus(false);
+			// 将该节点信息记录到数据库
+			addItem(nodeModel);
+			// 新增节点日志
+			minisyslogService.insert(minisyslog);
+			return JsonMessage.getString(200, "节点信息新增成功，但是节点不可用");
+		}
+
+	}
+
+
+
 }
