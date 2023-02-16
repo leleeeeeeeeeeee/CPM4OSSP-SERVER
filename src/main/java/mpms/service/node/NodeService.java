@@ -125,4 +125,9 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 	}
 
 
+	public String cacheNodeList(List<NodeModel> list) {
+		String reqId = IdUtil.fastUUID();
+		TIMED_CACHE.put(reqId, list);
+		return reqId;
+	}
 }
