@@ -327,5 +327,29 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		this.checkCronStatus();
 	}
 
+	public boolean checkCronStatus() {
+		// 关闭监听
+		List<NodeModel> list = list();
+		if (list == null || list.isEmpty()) {
+			NodeMonitor.stop();
+			return false;
+		} else {
+			boolean stop = true;
+			for (NodeModel nodeModel : list) {
+				if (nodeModel.isOpenStatus() && nodeModel.getCycle() != Cycle.none.getCode()) {
+					NodeMonitor.start();
+					stop = false;
+					break;
+				}
+			}
+			if (stop) {
+				NodeMonitor.stop();
+				return false;
+			}
+			return true;
+		}
+	}
+
+
 
 }
