@@ -350,6 +350,21 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		}
 	}
 
+	/**
+	 * 根据周期获取list
+	 *
+	 * @param cycle 周期
+	 * @return list
+	 */
+	public List<NodeModel> listByCycle(Cycle cycle) {
+		List<NodeModel> list = this.list();
+		if (list == null) {
+			return new ArrayList<>();
+		}
+		return list.stream()
+				.filter(nodeModel -> nodeModel.getCycle() == cycle.getCode() && nodeModel.isOpenStatus())
+				.collect(Collectors.toList());
+	}
 
 
 }
