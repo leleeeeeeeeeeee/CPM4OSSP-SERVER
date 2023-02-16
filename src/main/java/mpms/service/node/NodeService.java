@@ -261,5 +261,41 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		return true;
 	}
 
+	private String checkData(NodeModel nodeModel) {
+		String name = nodeModel.getName();
+		if (name == null || "".equals(name)) {
+			return JsonMessage.getString(405, "节点名称 不能为空");
+		}
+		String loginPwd = nodeModel.getLoginPwd();
+		if (loginPwd == null || "".equals(loginPwd)) {
+			return JsonMessage.getString(405, "节点密码 不能为空");
+		}
+		String loginName = nodeModel.getLoginName();
+		if (loginName == null || "".equals(loginName)) {
+			return JsonMessage.getString(405, "节点帐号 不能为空");
+		}
+		String id = nodeModel.getId();
+		if (id == null || "".equals(id)) {
+			return JsonMessage.getString(405, "节点ID 不能为空");
+		}
+		List<NodeModel> nodeList = list();
+		for (NodeModel item:nodeList) {
+			// 判断节点名称是否重复
+			if(nodeModel.getName().equals(item.getName()) && !item.getId().equals(nodeModel.getId())){
+				return JsonMessage.getString(405, "节点名称重复");
+			}
+		}
+		List<NodeModel> list = list();
+		if (list != null) {
+			for (NodeModel model : list) {
+				if (model.getUrl().equalsIgnoreCase(nodeModel.getUrl()) && !model.getId().equalsIgnoreCase(nodeModel.getId())) {
+					return JsonMessage.getString(405, "已经存在相同的节点地址啦");
+				}
+			}
+		}
+		return null;
+	}
+
+
 
 }
