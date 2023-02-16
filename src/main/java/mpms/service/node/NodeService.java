@@ -296,6 +296,8 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		return null;
 	}
 
+	@Override
+	public JSONArray listToArray(String dataId) {
+		return (JSONArray) JSONArray.toJSON(this.list());
+	}
 
-
-}
