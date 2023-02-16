@@ -94,4 +94,35 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		return nodeModels;
 	}
 
+	/**
+	 * 获取所有节点 和节点下面的项目和状态
+	 *
+	 * @return list
+	 */
+	public List<NodeModel> listAndProjectAndStatus() {
+		List<NodeModel> nodeModels = this.list();
+		Iterator<NodeModel> iterator = nodeModels.iterator();
+		while (iterator.hasNext()) {
+			NodeModel nodeModel = iterator.next();
+			if (!nodeModel.isOpenStatus()) {
+				iterator.remove();
+				continue;
+			}
+			try {
+				// 获取项目信息不需要状态
+				JSONArray jsonArray = NodeForward.requestData(nodeModel, NodeUrl.Manage_GetProjectInfo, JSONArray.class, null, "true");
+				if (jsonArray != null) {
+					nodeModel.setProjects(jsonArray);
+				} else {
+					iterator.remove();
+				}
+			} catch (Exception e) {
+				iterator.remove();
+			}
+		}
+		return nodeModels;
+
+	}
+
+
 }
