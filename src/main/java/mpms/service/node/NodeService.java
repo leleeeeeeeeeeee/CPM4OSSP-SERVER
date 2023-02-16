@@ -130,4 +130,15 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		TIMED_CACHE.put(reqId, list);
 		return reqId;
 	}
+
+	/**
+	 * 获取页面编辑的节点信息
+	 *
+	 * @param id id
+	 * @return list
+	 */
+	public List<NodeModel> getNodeModel(String id) {
+		return TIMED_CACHE.get(id);
+	}
+		
 }
