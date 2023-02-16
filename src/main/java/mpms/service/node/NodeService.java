@@ -314,6 +314,12 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		}
 	}
 
+	@Override
+	// 删除数据库数据
+	public void deleteItem(String id) {
+		super.deleteItem(id);
+		this.checkCronStatus();
+	}
 
 
 
