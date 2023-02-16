@@ -321,6 +321,11 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		this.checkCronStatus();
 	}
 
+	@Override
+	public void updateItem(NodeModel nodeModel) {
+		super.updateItem(nodeModel);
+		this.checkCronStatus();
+	}
 
 
 }
