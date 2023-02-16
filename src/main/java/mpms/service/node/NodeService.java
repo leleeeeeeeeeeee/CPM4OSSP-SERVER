@@ -52,5 +52,17 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		super(ServerConfigBean.NODE);
 	}
 
+	public HashSet<String> getAllGroup() {
+		//获取所有分组
+		List<NodeModel> nodeModels = list();
+		HashSet<String> hashSet = new HashSet<>();
+		if (nodeModels == null) {
+			return hashSet;
+		}
+		for (NodeModel nodeModel : nodeModels) {
+			hashSet.add(nodeModel.getGroup());
+		}
+		return hashSet;
+	}
 
 }
