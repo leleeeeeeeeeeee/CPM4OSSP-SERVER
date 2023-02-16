@@ -188,6 +188,52 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 
 	}
 
+	public String updateNode(NodeModel nodeModel, HttpServletRequest request) {
+		NodeModel exit = getItem(nodeModel.getId());
+		if (exit == null) {
+			return JsonMessage.getString(405, "节点不存在");
+		}
+		String error = checkData(nodeModel);
+		if (error != null) {
+			return error;
+		}
+		if(nodeModel!=null){
+			int timeOut = nodeModel.getTimeOut();
+			if(timeOut <0 || timeOut> 180){
+				return JsonMessage.getString(405, "设置的超时时间必须在3分钟内");
+			}
+		}
+		// 补充日志信息
+		Minisyslog minisyslog = new Minisyslog();
+		minisyslog.setContent("The node information is updated successfully.");
+		minisyslog.setLevel(0);
+		minisyslog.setType(0);
+		minisyslog.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		// 地址是否可达
+		Boolean isOpen = testUrl("http://"+nodeModel.getUrl()+"/node"+NodeUrl.SetTopCycle, 2000);
+		if(isOpen&&nodeModel.isOpenStatus()){
+			minisyslog.setExtra("更新id为"+nodeModel.getId()+"的节点，当前节点状态为启用,节点地址为"+nodeModel.getUrl()+"！");
+			try{
+				NodeForward.request(nodeModel, request, NodeUrl.SetTopCycle);
+			}catch (Exception e){
+				return JsonMessage.getString(400, "帐号密码不正确");
+			}
+			// 更新节点数据到数据库
+			updateItem(nodeModel);
+			// 新增节点日志
+			minisyslogService.insert(minisyslog);
+			return JsonMessage.getString(200, "节点信息更新成功，并且节点可用");
+		}else{
+			minisyslog.setExtra("更新id为"+nodeModel.getId()+"的节点，当前节点状态为禁用,节点地址为"+nodeModel.getUrl()+"！");
+			// 设置不可用
+			nodeModel.setOpenStatus(false);
+			// 更新节点数据到数据库
+			updateItem(nodeModel);
+			// 新增节点日志
+			minisyslogService.insert(minisyslog);
+			return JsonMessage.getString(200, "节点信息更新成功，但是节点不可用");
+		}
+	}
 
 
 }
