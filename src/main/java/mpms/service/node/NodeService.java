@@ -306,4 +306,15 @@ public class NodeService extends BaseOperService<NodeModel> implements BaseDynam
 		return (List<NodeModel>) filter(super.list(), ClassFeature.NODE);
 	}
 
+	@Override
+	public void addItem(NodeModel nodeModel) {
+		super.addItem(nodeModel);
+		if (nodeModel.isOpenStatus() && nodeModel.getCycle() != Cycle.none.getCode()) {
+			NodeMonitor.start();
+		}
+	}
+
+
+
+
 }
