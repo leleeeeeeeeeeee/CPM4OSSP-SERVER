@@ -22,4 +22,34 @@ import java.util.stream.Collectors;
 
  */
 public interface BaseDynamicService {
+
+	/***
+	 *  过滤角色数据
+	 * @param jsonArray 原array
+	 * @param classFeature 功能
+	 * @return 过滤后的，如果当前没有登录信息就不过滤
+	 */
+	default JSONArray filter(JSONArray jsonArray, ClassFeature classFeature) {
+		// 获取当前用户
+		UserModel userModel = BaseServerController.getUserModel();
+		if (jsonArray == null || userModel == null) {
+			return jsonArray;
+		}
+		if (userModel.isSystemUser()) {
+			// 系统管理全部权限
+			return jsonArray;
+		}
+		RoleService bean = SpringUtil.getBean(RoleService.class);
+		String parentId = getParameterValue(classFeature);
+		Set<String> dynamicList = bean.getDynamicList(userModel, classFeature, parentId);
+		if (dynamicList == null) {
+			return null;
+		}
+		List<Object> collect = jsonArray.stream().filter(o -> {
+			JSONObject jsonObject = (JSONObject) o;
+			String id = jsonObject.getString("id");
+			return dynamicList.contains(id);
+		}).collect(Collectors.toList());
+		return (JSONArray) JSONArray.toJSON(collect);
+	}
 }
