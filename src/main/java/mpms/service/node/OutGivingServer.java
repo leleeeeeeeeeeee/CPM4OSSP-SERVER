@@ -21,4 +21,22 @@ public class OutGivingServer extends BaseOperService<OutGivingModel> implements 
         super(ServerConfigBean.OUTGIVING);
     }
 
+    public boolean checkNode(String nodeId) {
+        List<OutGivingModel> list = list();
+        if (list == null || list.isEmpty()) {
+            return false;
+        }
+        for (OutGivingModel outGivingModel : list) {
+            List<OutGivingNodeProject> outGivingNodeProjectList = outGivingModel.getOutGivingNodeProjectList();
+            if (outGivingNodeProjectList != null) {
+                for (OutGivingNodeProject outGivingNodeProject : outGivingNodeProjectList) {
+                    if (outGivingNodeProject.getNodeId().equals(nodeId)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }
