@@ -110,4 +110,54 @@ public interface BaseDynamicService {
 	 * @return array
 	 */
 	JSONArray listToArray(String dataId);
+
+	/**
+	 * 查询功能下面的所有动态数据
+	 *
+	 * @param classFeature 功能
+	 * @param roleId       角色id
+	 * @param dataId       上级数据id
+	 * @return tree array
+	 */
+	default JSONArray listDynamic(ClassFeature classFeature, String roleId, String dataId) {
+		JSONArray listToArray;
+		try {
+			listToArray = listToArray(dataId);
+			if (listToArray == null || listToArray.isEmpty()) {
+				return null;
+			}
+		} catch (Exception e) {
+			DefaultSystemLog.getLog().error("拉取动态信息错误, roleId: [{}], dataId: [{}]", roleId, dataId, e);
+			return null;
+		}
+		JSONArray jsonArray = new JSONArray();
+		listToArray.forEach(obj -> {
+			JSONObject jsonObject = new JSONObject();
+			JSONObject data = (JSONObject) obj;
+			String name = data.getString("name");
+			String id = data.getString("id");
+			String group = StrUtil.emptyToDefault(data.getString("group"), StrUtil.EMPTY);
+			jsonObject.put("group", group);
+			//
+			if (StrUtil.isNotEmpty(group)) {
+				group = "【" + group + "】 -> ";
+			}
+			jsonObject.put("title", group + name);
+			jsonObject.put("id", StrUtil.emptyToDefault(dataId, "") + StrUtil.COLON + classFeature.name() + StrUtil.COLON + id);
+			boolean doChildren = this.doChildren(classFeature, roleId, id, jsonObject);
+			if (!doChildren) {
+				// 没有子级
+				RoleService bean = SpringUtil.getBean(RoleService.class);
+				List<String> checkList = bean.listDynamicData(roleId, classFeature, dataId);
+				if (checkList != null && checkList.contains(id)) {
+					jsonObject.put("checked", true);
+				}
+			}
+			jsonArray.add(jsonObject);
+		});
+		// 分组排序
+		jsonArray.sort(new PropertyComparator<>("group"));
+		return jsonArray;
+	}
+
 }
