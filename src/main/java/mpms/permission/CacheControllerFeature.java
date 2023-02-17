@@ -43,4 +43,14 @@ public class CacheControllerFeature {
 		return SYSTEM_URL.contains(url);
 	}
 
+	/**
+	 * 获取url 功能方法对象
+	 *
+	 * @param url url
+	 * @return url功能
+	 */
+	public static UrlFeature getUrlFeature(String url) {
+		return URL_FEATURE_MAP.get(url);
+	}
+
 }
