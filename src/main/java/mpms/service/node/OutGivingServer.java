@@ -17,4 +17,8 @@ import java.util.List;
 @Service
 public class OutGivingServer extends BaseOperService<OutGivingModel> implements BaseDynamicService {
 
+    public OutGivingServer() {
+        super(ServerConfigBean.OUTGIVING);
+    }
+
 }
