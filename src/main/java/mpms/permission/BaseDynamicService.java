@@ -197,4 +197,34 @@ public interface BaseDynamicService {
 
 	// -------------------------------------- 前端接收选中
 
+	/**
+	 * 接收前端的值
+	 *
+	 * @param classFeature 功能
+	 * @param jsonArray    array
+	 * @return list
+	 */
+	default List<RoleModel.TreeLevel> parserValue(ClassFeature classFeature, JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return null;
+		}
+		List<RoleModel.TreeLevel> list = new ArrayList<>();
+		jsonArray.forEach(o -> {
+			JSONObject jsonObject = (JSONObject) o;
+			JSONArray children = jsonObject.getJSONArray("children");
+			RoleModel.TreeLevel treeLevel = new RoleModel.TreeLevel();
+			if (children != null && !children.isEmpty()) {
+				treeLevel.setChildren(parserChildren(classFeature, children));
+			}
+			String id = jsonObject.getString("id");
+			if (id.contains(StrUtil.COLON)) {
+				id = id.split(StrUtil.COLON)[2];
+			}
+			treeLevel.setData(id);
+			treeLevel.setClassFeature(classFeature.name());
+			list.add(treeLevel);
+		});
+		return list;
+	}
+
 }
