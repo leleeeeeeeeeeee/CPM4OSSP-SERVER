@@ -39,4 +39,9 @@ public class OutGivingServer extends BaseOperService<OutGivingModel> implements 
         return false;
     }
 
+    @Override
+    public JSONArray listToArray(String dataId) {
+        return (JSONArray) JSONArray.toJSON(this.list());
+    }
+
 }
