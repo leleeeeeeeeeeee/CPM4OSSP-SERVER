@@ -28,4 +28,9 @@ public class CacheControllerFeature {
 	 * 系统管理员使用的权限
 	 */
 	private static final List<String> SYSTEM_URL = new ArrayList<>();
+
+	public static Map<ClassFeature, Set<MethodFeature>> getFeatureMap() {
+		return FEATURE_MAP;
+	}
+
 }
