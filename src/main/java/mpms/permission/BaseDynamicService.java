@@ -52,4 +52,33 @@ public interface BaseDynamicService {
 		}).collect(Collectors.toList());
 		return (JSONArray) JSONArray.toJSON(collect);
 	}
+
+	/***
+	 *  过滤角色数据
+	 * @param list 原list
+	 * @param classFeature 功能
+	 * @return 过滤后的，如果当前没有登录信息就不过滤
+	 */
+	default List<? extends BaseModel> filter(List<? extends BaseModel> list, ClassFeature classFeature) {
+		// 获取当前用户
+		UserModel userModel = BaseServerController.getUserModel();
+		if (list == null || userModel == null) {
+			return list;
+		}
+		if (userModel.isSystemUser()) {
+			// 系统管理全部权限
+			return list;
+		}
+        return list;
+//		RoleService bean = SpringUtil.getBean(RoleService.class);
+//		String parentId = getParameterValue(classFeature);
+//        System.out.println("parentId = " + parentId);
+//		Set<String> dynamicList = bean.getDynamicList(userModel, classFeature, parentId);
+//		if (dynamicList == null) {
+//			// 没有角色没有权限
+//			return null;
+//		}
+//		//
+//		return list.stream().filter(baseModel -> dynamicList.contains(baseModel.getId())).collect(Collectors.toList());
+	}
 }
