@@ -33,4 +33,14 @@ public class CacheControllerFeature {
 		return FEATURE_MAP;
 	}
 
+	/**
+	 * 判断是否为系统管理员权限url
+	 *
+	 * @param url url
+	 * @return true 只能是系统管理员访问
+	 */
+	public static boolean isSystemUrl(String url) {
+		return SYSTEM_URL.contains(url);
+	}
+
 }
