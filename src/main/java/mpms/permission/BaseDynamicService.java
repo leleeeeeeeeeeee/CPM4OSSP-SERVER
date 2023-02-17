@@ -100,4 +100,14 @@ public interface BaseDynamicService {
 		String parameterName = dynamicData.getChildrenParameterName();
 		return AbstractController.getRequestAttributes().getRequest().getParameter(parameterName);
 	}
+
+	// -------------------------------------- 转换数据为tree
+
+	/**
+	 * 查询动态数据的array
+	 *
+	 * @param dataId 上级数据id
+	 * @return array
+	 */
+	JSONArray listToArray(String dataId);
 }
