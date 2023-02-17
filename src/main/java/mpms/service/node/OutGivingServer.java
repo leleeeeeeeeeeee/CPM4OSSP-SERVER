@@ -44,4 +44,8 @@ public class OutGivingServer extends BaseOperService<OutGivingModel> implements 
         return (JSONArray) JSONArray.toJSON(this.list());
     }
 
+    @Override
+    public List<OutGivingModel> list() {
+        return (List<OutGivingModel>) filter(super.list(), ClassFeature.OUTGIVING);
+    }
 }
