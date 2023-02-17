@@ -81,4 +81,23 @@ public interface BaseDynamicService {
 //		//
 //		return list.stream().filter(baseModel -> dynamicList.contains(baseModel.getId())).collect(Collectors.toList());
 	}
+
+	/**
+	 * 获取参数
+	 *
+	 * @param classFeature 功能
+	 * @return 参数
+	 */
+	default String getParameterValue(ClassFeature classFeature) {
+		ClassFeature parent = classFeature.getParent();
+		if (parent == null) {
+			return null;
+		}
+		DynamicData dynamicData = DynamicData.getDynamicData(parent);
+		if (dynamicData == null) {
+			return null;
+		}
+		String parameterName = dynamicData.getChildrenParameterName();
+		return AbstractController.getRequestAttributes().getRequest().getParameter(parameterName);
+	}
 }
