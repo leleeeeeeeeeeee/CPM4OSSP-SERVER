@@ -19,4 +19,6 @@ import java.util.*;
  *
  */
 public class CacheControllerFeature {
-}
+
+	private static final Map<ClassFeature, Set<MethodFeature>> FEATURE_MAP = new HashMap<>();
+			}
