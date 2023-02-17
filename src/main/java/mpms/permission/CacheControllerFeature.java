@@ -21,4 +21,7 @@ import java.util.*;
 public class CacheControllerFeature {
 
 	private static final Map<ClassFeature, Set<MethodFeature>> FEATURE_MAP = new HashMap<>();
-			}
+
+	private static final Map<String, UrlFeature> URL_FEATURE_MAP = new TreeMap<>();
+
+	}
