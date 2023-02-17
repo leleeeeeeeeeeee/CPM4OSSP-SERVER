@@ -227,4 +227,29 @@ public interface BaseDynamicService {
 		return list;
 	}
 
+	/**
+	 * 转换子级
+	 *
+	 * @param classFeature 功能
+	 * @param jsonArray    array
+	 * @return list
+	 */
+	default List<RoleModel.TreeLevel> parserChildren(ClassFeature classFeature, JSONArray jsonArray) {
+		Set<ClassFeature> children = DynamicData.getChildren(classFeature);
+		if (children == null) {
+			return null;
+		}
+		List<RoleModel.TreeLevel> list = new ArrayList<>();
+		Map<ClassFeature, JSONArray> jsonArrayMap = this.convertArray(jsonArray);
+		for (ClassFeature child : children) {
+			JSONArray jsonArray1 = jsonArrayMap.get(child);
+			List<RoleModel.TreeLevel> lists = parserValue(child, jsonArray1);
+			if (lists != null) {
+				list.addAll(lists);
+			}
+//            classFeatureListMap.put(child, list);
+		}
+		return list;
+	}
+
 }
