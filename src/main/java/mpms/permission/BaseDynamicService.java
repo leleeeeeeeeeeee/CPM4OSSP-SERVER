@@ -252,4 +252,22 @@ public interface BaseDynamicService {
 		return list;
 	}
 
+	/**
+	 * 将二级数据转换为map
+	 *
+	 * @param jsonArray array
+	 * @return map
+	 */
+	default Map<ClassFeature, JSONArray> convertArray(JSONArray jsonArray) {
+		Map<ClassFeature, JSONArray> newMap = new HashMap<>();
+		jsonArray.forEach(o -> {
+			JSONObject jsonObject = (JSONObject) o;
+			String id = jsonObject.getString("id");
+			ClassFeature classFeature = ClassFeature.valueOf(id);
+			newMap.put(classFeature, jsonObject.getJSONArray("children"));
+		});
+		return newMap;
+	}
+
+	// -------------------------------------- 前端接收选中-------------------- end
 }
