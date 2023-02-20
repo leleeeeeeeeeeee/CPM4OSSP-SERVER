@@ -150,4 +150,6 @@ public class CacheControllerFeature {
 		return val;
 	}
 
+	public static class UrlFeature {
+	}
 }
