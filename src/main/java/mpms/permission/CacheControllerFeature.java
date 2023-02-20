@@ -163,5 +163,9 @@ public class CacheControllerFeature {
 			return classFeature;
 		}
 
+		public MethodFeature getMethodFeature() {
+			return methodFeature;
+		}
+
 	}
 }
