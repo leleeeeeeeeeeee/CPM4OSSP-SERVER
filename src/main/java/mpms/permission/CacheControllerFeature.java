@@ -167,5 +167,10 @@ public class CacheControllerFeature {
 			return methodFeature;
 		}
 
+		UrlFeature(String url, ClassFeature classFeature, MethodFeature methodFeature) {
+			this.url = url;
+			this.classFeature = classFeature;
+			this.methodFeature = methodFeature;
+		}
 	}
 }
