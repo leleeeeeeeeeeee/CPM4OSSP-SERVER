@@ -111,4 +111,18 @@ public class CacheControllerFeature {
 		});
 	}
 
+	/**
+	 * 获取类上的url
+	 *
+	 * @param aClass class
+	 * @return url
+	 */
+	private static String getClassUrl(Class<?> aClass) {
+		RequestMapping requestMapping = aClass.getAnnotation(RequestMapping.class);
+		if (requestMapping == null) {
+			return StrUtil.SLASH;
+		}
+		return requestMapping.value()[0];
+	}
+
 }
