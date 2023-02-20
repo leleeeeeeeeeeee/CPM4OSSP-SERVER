@@ -53,4 +53,62 @@ public class CacheControllerFeature {
 		return URL_FEATURE_MAP.get(url);
 	}
 
+
+	/**
+	 * 扫描包
+	 */
+	public static void init() {
+		// 扫描系统管理员
+		Set<Class<?>> classes = ClassUtil.scanPackage("io.jpom.controller");
+		classes.forEach(aClass -> {
+			String classUrl = getClassUrl(aClass);
+			Method[] publicMethods = ReflectUtil.getPublicMethods(aClass);
+			for (Method publicMethod : publicMethods) {
+				SystemPermission systemPermission = publicMethod.getAnnotation(SystemPermission.class);
+				if (systemPermission == null) {
+					continue;
+				}
+				String methodUrl = getMethodUrl(publicMethod);
+				String format = String.format("/%s/%s", classUrl, methodUrl);
+				format = FileUtil.normalize(format);
+				SYSTEM_URL.add(format);
+			}
+		});
+		// 扫描功能方法
+		classes.forEach(aClass -> {
+			Feature annotation = aClass.getAnnotation(Feature.class);
+			if (annotation == null) {
+				return;
+			}
+			ClassFeature classFeature = annotation.cls();
+			if (classFeature == ClassFeature.NULL) {
+				return;
+			}
+			String clsUrl = getClassUrl(aClass);
+
+			Set<MethodFeature> methodFeatures1 = FEATURE_MAP.computeIfAbsent(classFeature, classFeature1 -> new HashSet<>());
+			Method[] publicMethods = ReflectUtil.getPublicMethods(aClass);
+
+			Set<MethodFeature> methodFeatures = new HashSet<>();
+			for (Method publicMethod : publicMethods) {
+				Feature publicMethodAnnotation = publicMethod.getAnnotation(Feature.class);
+				if (publicMethodAnnotation == null) {
+					continue;
+				}
+				MethodFeature methodFeature = publicMethodAnnotation.method();
+				if (methodFeature == MethodFeature.NULL) {
+					continue;
+				}
+
+				String methodUrl = getMethodUrl(publicMethod);
+				methodFeatures.add(methodFeature);
+
+				String format = String.format("/%s/%s", clsUrl, methodUrl);
+				format = FileUtil.normalize(format);
+				URL_FEATURE_MAP.put(format, new UrlFeature(format, classFeature, methodFeature));
+			}
+			methodFeatures1.addAll(methodFeatures);
+		});
+	}
+
 }
