@@ -155,5 +155,9 @@ public class CacheControllerFeature {
 		private final ClassFeature classFeature;
 		private final MethodFeature methodFeature;
 
+		public String getUrl() {
+			return url;
+		}
+
 	}
 }
