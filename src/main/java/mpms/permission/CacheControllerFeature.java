@@ -151,5 +151,9 @@ public class CacheControllerFeature {
 	}
 
 	public static class UrlFeature {
+		private final String url;
+		private final ClassFeature classFeature;
+		private final MethodFeature methodFeature;
+
 	}
 }
