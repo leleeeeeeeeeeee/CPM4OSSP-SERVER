@@ -125,4 +125,29 @@ public class CacheControllerFeature {
 		return requestMapping.value()[0];
 	}
 
+	/**
+	 * 获取方法名上的url
+	 *
+	 * @param publicMethod 方法对象
+	 * @return url
+	 */
+	private static String getMethodUrl(Method publicMethod) {
+		String val = StrUtil.EMPTY;
+		RequestMapping methodAnnotation = publicMethod.getAnnotation(RequestMapping.class);
+		if (methodAnnotation == null) {
+			GetMapping getMapping = publicMethod.getAnnotation(GetMapping.class);
+			if (getMapping == null) {
+				PostMapping postMapping = publicMethod.getAnnotation(PostMapping.class);
+				if (postMapping != null) {
+					val = postMapping.value()[0];
+				}
+			} else {
+				val = getMapping.value()[0];
+			}
+		} else {
+			val = methodAnnotation.value()[0];
+		}
+		return val;
+	}
+
 }
