@@ -159,5 +159,9 @@ public class CacheControllerFeature {
 			return url;
 		}
 
+		public ClassFeature getClassFeature() {
+			return classFeature;
+		}
+
 	}
 }
