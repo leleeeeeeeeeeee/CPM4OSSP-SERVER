@@ -1,12 +1,12 @@
-package io.jpom.permission;
+package mpms.permission;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import io.jpom.plugin.ClassFeature;
-import io.jpom.plugin.Feature;
-import io.jpom.plugin.MethodFeature;
+import mpms.plugin.ClassFeature;
+import mpms.plugin.Feature;
+import mpms.plugin.MethodFeature;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
