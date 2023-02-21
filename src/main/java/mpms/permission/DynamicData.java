@@ -49,4 +49,13 @@ public class DynamicData {
             classFeatures.add(feature);
         }
     }
+
+    /**
+     * 获取一级功能
+     *
+     * @return 子级
+     */
+    public static List<ClassFeature> getRoot() {
+        return DYNAMIC_DATA_MAP.keySet().stream().filter(dynamicData -> dynamicData.getParent() == null).collect(Collectors.toList());
+    }
 }
