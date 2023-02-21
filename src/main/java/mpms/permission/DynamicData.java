@@ -21,4 +21,9 @@ public class DynamicData {
 
     private static final Map<ClassFeature, DynamicData> DYNAMIC_DATA_MAP = new HashMap<>();
 
+    /**
+     * 二级数据
+     */
+    private static final Map<ClassFeature, Set<ClassFeature>> PARENT = new HashMap<>();
+
 }
