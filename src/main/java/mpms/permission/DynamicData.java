@@ -26,4 +26,19 @@ public class DynamicData {
      */
     private static final Map<ClassFeature, Set<ClassFeature>> PARENT = new HashMap<>();
 
+    static {
+        // 节点
+        put(ClassFeature.NODE, new DynamicData(NodeService.class, "id", BaseServerController.NODE_ID, MethodFeature.LIST));
+        // 分发
+//        put(ClassFeature.OUTGIVING, new DynamicData(OutGivingServer.class, MethodFeature.LIST));
+        // 项目
+//        put(ClassFeature.PROJECT, new DynamicData(ProjectInfoService.class, MethodFeature.LIST));
+        // 脚本
+        put(ClassFeature.SCRIPT, new DynamicData(ScriptServer.class, MethodFeature.LIST));
+
+//        put(ClassFeature.SSH, new DynamicData(SshService.class, MethodFeature.LIST));
+
+        put(ClassFeature.TOMCAT, new DynamicData(TomcatService.class, MethodFeature.LIST));
+
+    }
 }
