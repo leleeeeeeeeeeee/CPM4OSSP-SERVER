@@ -41,4 +41,12 @@ public class DynamicData {
         put(ClassFeature.TOMCAT, new DynamicData(TomcatService.class, MethodFeature.LIST));
 
     }
+
+    private static void put(ClassFeature feature, DynamicData dynamicData) {
+        DYNAMIC_DATA_MAP.put(feature, dynamicData);
+        if (feature.getParent() != null) {
+            Set<ClassFeature> classFeatures = PARENT.computeIfAbsent(feature.getParent(), classFeature -> new HashSet<>());
+            classFeatures.add(feature);
+        }
+    }
 }
