@@ -19,4 +19,6 @@ import java.util.stream.Collectors;
  */
 public class DynamicData {
 
+    private static final Map<ClassFeature, DynamicData> DYNAMIC_DATA_MAP = new HashMap<>();
+
 }
