@@ -20,7 +20,7 @@ import java.io.*;
 import java.security.PrivateKey;
 
 public class TestSshGit {
-
+	
 
     @Test
 	public void test1() throws GitAPIException {
@@ -32,4 +32,10 @@ public class TestSshGit {
 
 	}
 
+	@Test
+	public void test() throws FileNotFoundException {
+		File keyFile = new File("/Users/user/.ssh/id_rsa");
+		PrivateKey privateKey = PemUtil.readPemPrivateKey(new FileInputStream(keyFile));
+
+	}
 }
