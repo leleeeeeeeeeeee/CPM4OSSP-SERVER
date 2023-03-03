@@ -27,4 +27,28 @@
 //
 //public class TestGit {
 //
+//	@Test
+//	public void test() {
+//
+//	}
+//
+//	@Test
+//	public void test2() throws IOException {
+//		String fileOrDirPath = "D:\\jpom\\server\\data\\temp\\";
+//		List<File> strings = FileUtil.loopFiles(fileOrDirPath);
+//		System.out.println(strings.size());
+//		for (File string : strings) {
+//			string.setWritable(true);
+//			try {
+//				Path path = Paths.get(string.getAbsolutePath());
+//				Files.delete(path);
+//			} catch (Exception e) {
+//				System.out.println(e.getMessage());
+//			}
+//		}
+//		FileUtil.clean(fileOrDirPath);
+//		Path path = Paths.get(fileOrDirPath);
+//		Files.delete(path);
+//	}
+//
 //}
