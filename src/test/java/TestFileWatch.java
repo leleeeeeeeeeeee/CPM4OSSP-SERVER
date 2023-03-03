@@ -13,7 +13,11 @@ public class TestFileWatch {
     public static void main(String[] args) {
         File file = new File("D:\\SystemDocument\\Desktop\\top.txt");
         WatchMonitor watchMonitor = WatchUtil.create(file);
+        watchMonitor.watch(new Watcher() {
+            @Override
+            public void onCreate(WatchEvent<?> event, Path currentPath) {
 
+            }
 
             @Override
             public void onModify(WatchEvent<?> event, Path currentPath) {
