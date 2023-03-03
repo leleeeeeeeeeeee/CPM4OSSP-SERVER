@@ -54,6 +54,63 @@ public class PermissionInterceptor extends BaseLinxInterceptor {
 		}
 	}
 
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+		this.init();
+		this.addNode(request);
+		UserModel userModel = BaseServerController.getUserModel();
+		if (userModel == null || userModel.isSystemUser()) {
+			// 没有登录、或者超级管理自己放过
+			return true;
+		}
+		SystemPermission systemPermission = handlerMethod.getMethodAnnotation(SystemPermission.class);
+		if (systemPermission != null && !userModel.isSystemUser()) {
+			// 系统管理员权限
+			this.errorMsg(request, response);
+			return false;
+		}
+		//
+		Feature feature = handlerMethod.getBeanType().getAnnotation(Feature.class);
+		if (feature == null || feature.cls() == ClassFeature.NULL) {
+			return true;
+		}
+		ClassFeature classFeature = feature.cls();
+		feature = handlerMethod.getMethodAnnotation(Feature.class);
+		if (feature == null || feature.method() == MethodFeature.NULL) {
+			return true;
+		}
+		MethodFeature method = feature.method();
+//		 判断方法
+		if (roleService.errorMethodPermission(userModel, classFeature, method)) {
+			this.errorMsg(request, response);
+			return false;
+		}
+//		 判断动态权限
+		DynamicData dynamicData = DynamicData.getDynamicData(classFeature);
+		if (dynamicData != null) {
+			// 排除的方法
+			MethodFeature[] excludeMethod = dynamicData.getExcludeMethod();
+			if (excludeMethod != null) {
+				for (MethodFeature methodFeature : excludeMethod) {
+					if (methodFeature == method) {
+						// 排除方法
+						return true;
+					}
+				}
+			}
+			// 动态参数
+			String parameterName = dynamicData.getParameterName();
+			String parameter = request.getParameter(parameterName);
+
+			//新增操作不需要校验是否有动态权限
+			String type = request.getParameter(TYPE);
+			if (TYPE_ADD.equalsIgnoreCase(type) && roleService.canAdd(userModel)) {
+				return true;
+			}
+		}
+
+		return true;
+	}
 
 
 
