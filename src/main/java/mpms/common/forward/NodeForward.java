@@ -189,6 +189,20 @@ public class NodeForward {
         return parseBody(response);
     }
 
+    /**
+     * 普通消息转发,并解析数据
+     *
+     * @param nodeModel 节点
+     * @param request   请求
+     * @param nodeUrl   节点的url
+     * @param tClass    要解析的类
+     * @param <T>       泛型
+     * @return T
+     */
+    public static <T> T requestData(NodeModel nodeModel, NodeUrl nodeUrl, HttpServletRequest request, Class<T> tClass) {
+        JsonMessage<T> jsonMessage = request(nodeModel, request, nodeUrl);
+        return jsonMessage.getData(tClass);
+    }
 
 
 
