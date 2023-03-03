@@ -39,7 +39,13 @@ public abstract class BaseServerController extends BaseJpomController {
 		return nodeModel;
 	}
 
-
+	protected NodeModel tryGetNode() {
+		String nodeId = getParameter(NODE_ID);
+		if (StrUtil.isEmpty(nodeId)) {
+			return null;
+		}
+		return nodeService.getItem(nodeId);
+	}
 
 
 
