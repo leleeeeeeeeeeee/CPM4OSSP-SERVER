@@ -13,7 +13,16 @@ public class TestFileWatch {
     public static void main(String[] args) {
         File file = new File("D:\\SystemDocument\\Desktop\\top.txt");
         WatchMonitor watchMonitor = WatchUtil.create(file);
-        
+
+
+
+
+
+
+            @Override
+            public void onOverflow(WatchEvent<?> event, Path currentPath) {
+                System.out.println("onOverflow");
+            }
         });
     }
 }
