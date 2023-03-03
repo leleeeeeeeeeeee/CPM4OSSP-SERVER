@@ -35,6 +35,12 @@ public class ProxyOperat {
         return null;
     }
 
+    public String saveToConf(NodeModel nodeModel) {
+        writeToFile(nodeModel);
+        proxyRestart();
+        return null;
+    }
+
 
 
 
