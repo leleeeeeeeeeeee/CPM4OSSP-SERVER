@@ -13,6 +13,15 @@ import java.util.Set;
 public class Test {
     public static void main(String[] args) {
 
-       
+        System.out.println(FileUtil.normalize("sss/ss/../ssss"));
+        System.out.println(FileUtil.normalize("./ssss/ssss"));
+        CacheControllerFeature.init();
+        Map<ClassFeature, Set<MethodFeature>> classFeatureSetMap = CacheControllerFeature.getFeatureMap();
+        ClassFeature monitor = ClassFeature.valueOf("MONITOR");
+        System.out.println(monitor.getName());
+        System.out.println(classFeatureSetMap);
+
+        Class<?> typeArgument = ClassUtil.getTypeArgument(RoleService.class);
+        System.out.println(typeArgument);
     }
 }
