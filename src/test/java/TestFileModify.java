@@ -8,5 +8,15 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 
 public class TestFileModify {
-    
+    public static void main(String[] args) {
+        File file = FileUtil.file("D:\\jpom\\server\\data\\mail_config.json");
+        WatchMonitor monitor = WatchUtil.create(file, WatchMonitor.ENTRY_MODIFY);
+        monitor.setWatcher(new SimpleWatcher() {
+            @Override
+            public void onModify(WatchEvent<?> event, Path currentPath) {
+                System.out.println("刷新邮箱");
+            }
+        });
+        monitor.start();
+    }
 }
