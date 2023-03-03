@@ -11,5 +11,16 @@ import java.util.List;
 
 public class TestYml {
 
-	
+	@Test
+	public void test() throws IOException {
+		String path = "D:\\Idea\\Jpom\\modules\\agent\\src\\main\\resources\\bin\\extConfig.yml";
+		YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
+		URL resource = ResourceUtil.getResource(path);
+		List<PropertySource<?>> test = yamlPropertySourceLoader.load("test", new FileUrlResource(path));
+		PropertySource<?> propertySource = test.get(0);
+		System.out.println(propertySource);
+
+		Object user = propertySource.getProperty(ConfigBean.AUTHORIZE_USER_KEY);
+		System.out.println(user);
+	}
 }
