@@ -84,6 +84,80 @@ public class NodeForward {
         return request(nodeModel, null, nodeUrl, false, null, null, pName, pVal, val);
     }
 
+    /**
+     * 普通消息转发
+     *
+     * @param nodeModel 节点
+     * @param request   请求
+     * @param nodeUrl   节点的url
+     * @param pVal      主参数值
+     * @param pName     主参数名
+     * @param userModel 用户
+     * @param jsonData  数据
+     * @param mustUser  是否必须需要user
+     * @param val       其他参数
+     * @param <T>       泛型
+     * @return JSON
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static <T> JsonMessage<T> request(NodeModel nodeModel,
+                                              HttpServletRequest request,
+                                              NodeUrl nodeUrl,
+                                              boolean mustUser,
+                                              UserModel userModel,
+                                              JSONObject jsonData,
+                                              String pName,
+                                              Object pVal,
+                                              Object... val) {
+
+        String url = nodeModel.getRealUrl(nodeUrl);
+        HttpRequest httpRequest = HttpUtil.createPost(url);
+        if (mustUser) {
+            if (userModel == null) {
+                userModel = BaseServerController.getUserModel();
+            }
+        }
+
+        addUser(httpRequest, nodeModel, nodeUrl, userModel);
+
+        Map params = null;
+        if (request != null) {
+            params = request.getParameterMap();
+            if (XssFilter.isXSS() && params != null) {
+                for (Map.Entry<String, String[]> entry : (Iterable<Map.Entry<String, String[]>>) params.entrySet()) {
+                    String[] values = entry.getValue();
+                    if (values != null) {
+                        for (int i = 0, len = values.length; i < len; i++) {
+                            values[i] = HtmlUtil.unescape(values[i]);
+                        }
+                        entry.setValue(values);
+                    }
+                }
+            }
+        }
+        httpRequest.form(pName, pVal, val);
+
+        if (jsonData != null) {
+            httpRequest.form(jsonData);
+        }
+        HttpResponse response;
+        try {
+            response = httpRequest
+                    .form(params)
+                    .execute();
+        } catch (Exception e) {
+            /**
+             *
+             * revert version and add log print
+             *
+             */
+            DefaultSystemLog.getLog().error("node [{}] connect failed...message: [{}]", nodeModel.getName(), e.getMessage());
+            throw new AgentException(nodeModel.getName() + "节点异常：" + e.getMessage());
+        }
+
+        return parseBody(response);
+    }
+
 
 
 
