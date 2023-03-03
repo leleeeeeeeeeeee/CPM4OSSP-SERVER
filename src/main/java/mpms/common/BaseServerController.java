@@ -24,7 +24,20 @@ import java.util.Objects;
  *
  */
 public abstract class BaseServerController extends BaseJpomController {
+	private static final ThreadLocal<UserModel> USER_MODEL_THREAD_LOCAL = new ThreadLocal<>();
 
+	public static final String NODE_ID = "nodeId";
+
+	@Resource
+	protected NodeService nodeService;
+
+	protected NodeModel getNode() {
+		NodeModel nodeModel = tryGetNode();
+		if (nodeModel == null) {
+			throw new LinuxRuntimeException("节点信息不正确");
+		}
+		return nodeModel;
+	}
 
 
 
