@@ -23,6 +23,11 @@ public class TestJschExec {
 
 	private static final String cmd = "ps -ef | grep jpom-test-jar | awk '{print $2}' | xargs kill -9";
 
+	@Test
+	public void testShell() {
+		Session session = JschUtil.createSession("192.168.1.8", 22, "root", "123456+");
+		System.out.println(JschUtil.execByShell(session, "source /etc/profile && source ~/.bash_profile && source ~/.bashrc && nohup java -Dappliction=jpom-test-jar -jar /home/data/test/springboot-test-jar-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &", CharsetUtil.CHARSET_UTF_8));
+	}
 
 
 
