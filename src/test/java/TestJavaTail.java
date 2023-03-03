@@ -12,6 +12,21 @@ import java.nio.file.WatchEvent;
  * Created by jiangzeyin on 2019/3/15.
  */
 public class TestJavaTail {
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        WatchMonitor watchMonitor = WatchUtil.create("D:\\SystemDocument\\Desktop\\jboot-test.log", WatchMonitor.ENTRY_DELETE, WatchMonitor.ENTRY_MODIFY, WatchMonitor.OVERFLOW);
+        watchMonitor.setWatcher(new SimpleWatcher() {
+            @Override
+            public void onModify(WatchEvent<?> event, Path currentPath) {
+                System.out.println(event.context());
+                System.out.println(currentPath);
+
+                System.out.println(event.count());
+            }
+        });
+        watchMonitor.start();
+
+    }
 
     public static void test() throws IOException {
 
