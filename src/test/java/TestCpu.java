@@ -47,6 +47,13 @@ public class TestCpu {
     }
 
 
-
+    private static String substring(String src, int start_idx, int end_idx) {
+        byte[] b = src.getBytes();
+        StringBuilder tgt = new StringBuilder();
+        for (int i = start_idx; i <= end_idx; i++) {
+            tgt.append((char) b[i]);
+        }
+        return tgt.toString();
+    }
 
 }
