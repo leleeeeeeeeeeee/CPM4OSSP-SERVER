@@ -38,7 +38,10 @@ public class OpenApiInterceptor extends BaseInterceptor {
             return false;
         }
         String authorizeToken = ServerExtConfigBean.getInstance().getAuthorizeToken();
-
+        if (StrUtil.isEmpty(authorizeToken)) {
+            ServletUtil.write(response, JsonMessage.getString(300, "not config token"), MediaType.APPLICATION_JSON_VALUE);
+            return false;
+        }
         String md5 = SecureUtil.md5(authorizeToken);
         md5 = SecureUtil.sha1(md5 + ServerOpenApi.HEAD);
 
