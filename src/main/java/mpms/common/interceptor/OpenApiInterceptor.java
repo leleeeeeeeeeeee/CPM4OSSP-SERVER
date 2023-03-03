@@ -33,7 +33,10 @@ public class OpenApiInterceptor extends BaseInterceptor {
 
     private boolean checkOpenApi(HttpServletRequest request, HttpServletResponse response) {
         String header = request.getHeader(ServerOpenApi.HEAD);
-
+        if (StrUtil.isEmpty(header)) {
+            ServletUtil.write(response, JsonMessage.getString(300, "token empty"), MediaType.APPLICATION_JSON_VALUE);
+            return false;
+        }
         String authorizeToken = ServerExtConfigBean.getInstance().getAuthorizeToken();
 
         String md5 = SecureUtil.md5(authorizeToken);
