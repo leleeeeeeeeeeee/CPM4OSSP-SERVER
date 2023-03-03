@@ -19,6 +19,7 @@ public class OpenApiInterceptor extends BaseInterceptor {
 
     @Override
     protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+
         NotLogin methodAnnotation = handlerMethod.getMethodAnnotation(NotLogin.class);
         if (methodAnnotation == null) {
             if (handlerMethod.getBeanType().isAnnotationPresent(NotLogin.class)) {
@@ -30,5 +31,14 @@ public class OpenApiInterceptor extends BaseInterceptor {
         return checkOpenApi(request, response);
     }
 
+    private boolean checkOpenApi(HttpServletRequest request, HttpServletResponse response) {
+        String header = request.getHeader(ServerOpenApi.HEAD);
 
+        String authorizeToken = ServerExtConfigBean.getInstance().getAuthorizeToken();
+
+        String md5 = SecureUtil.md5(authorizeToken);
+        md5 = SecureUtil.sha1(md5 + ServerOpenApi.HEAD);
+
+        return true;
+    }
 }
