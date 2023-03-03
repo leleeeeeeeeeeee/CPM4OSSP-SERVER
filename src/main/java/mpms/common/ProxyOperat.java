@@ -78,5 +78,15 @@ public class ProxyOperat {
         return jsonArray.toJavaList(cls);
     }
 
-
+    private JSONArray formatToArray(JSONObject jsonObject) {
+        if (jsonObject == null) {
+            return new JSONArray();
+        }
+        Set<String> setKey = jsonObject.keySet();
+        JSONArray jsonArray = new JSONArray();
+        for (String key : setKey) {
+            jsonArray.add(jsonObject.getJSONObject(key));
+        }
+        return jsonArray;
+    }
 }
