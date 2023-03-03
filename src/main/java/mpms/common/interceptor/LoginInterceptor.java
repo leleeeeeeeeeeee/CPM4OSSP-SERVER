@@ -32,6 +32,17 @@ public class LoginInterceptor extends BaseLinxInterceptor {
 
 
 
+    /**
+     * 提示登录
+     *
+     * @param request       req
+     * @param response      res
+     * @param handlerMethod 方法
+     * @throws IOException 异常
+     */
+    private void responseLogin(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod, int code) throws IOException {
+        ServletUtil.write(response, JsonMessage.getString(code, "登录信息已失效,重新登录"), MediaType.APPLICATION_JSON_VALUE);
+    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
