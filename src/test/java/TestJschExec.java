@@ -127,6 +127,45 @@ public class TestJschExec {
 	}
 
 
+	@Test
+	public void test1() throws IOException, JSchException {
+		Charset charset = CharsetUtil.CHARSET_UTF_8;
+		Session session = JschUtil.createSession("192.168.1.8", 22, "root", "123456+");
+
+		ChannelExec channel = (ChannelExec) JschUtil.createChannel(session, ChannelType.EXEC);
+
+		// 添加环境变量
+		channel.setCommand(cmd);
+		InputStream inputStream = channel.getInputStream();
+		InputStream errStream = channel.getErrStream();
+		channel.connect();
+
+
+		final String[] error = new String[1];
+		final String[] result = new String[1];
+
+
+		try {
+			System.out.println(error[0] = IoUtil.read(errStream, charset));
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (!StrUtil.contains(e.getMessage(), "Pipe closed")) {
+				DefaultSystemLog.getLog().error("读取 exec err 流发生异常", e);
+				error[0] = "读取 exec err 流发生异常" + e.getMessage();
+			}
+		}
+
+		try {
+			result[0] = IoUtil.read(inputStream, charset);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (!StrUtil.contains(e.getMessage(), "Pipe closed")) {
+				DefaultSystemLog.getLog().error("读取 exec 流发生异常", e);
+				result[0] = "读取 exec 流发生异常" + e.getMessage();
+			}
+		}
+		System.out.println("结束 " + result[0] + "  " + error[0]);
+	}
 
 
 }
