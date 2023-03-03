@@ -282,6 +282,36 @@ public class NodeForward {
     }
 
     /**
+     * 下载文件消息转发
+     *
+     * @param nodeModel 节点
+     * @param request   请求
+     * @param response  响应
+     * @param nodeUrl   节点的url
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void requestDownload(NodeModel nodeModel, HttpServletRequest request, HttpServletResponse response, NodeUrl nodeUrl) {
+        String url = nodeModel.getRealUrl(nodeUrl);
+        HttpRequest httpRequest = HttpUtil.createGet(url);
+        addUser(httpRequest, nodeModel, nodeUrl);
+
+        Map params = ServletUtil.getParams(request);
+        httpRequest.form(params);
+
+        HttpResponse response1;
+        try {
+
+            httpRequest.timeout(ServerExtConfigBean.getInstance().getUploadFileTimeOut());
+            response1 = httpRequest.execute();
+        } catch (Exception e) {
+            throw new AgentException(nodeModel.getName() + "节点异常：" + e.getMessage(), e);
+        }
+        String contentDisposition = response1.header("Content-Disposition");
+        response.setHeader("Content-Disposition", contentDisposition);
+        String contentType = response1.header("Content-Type");
+        response.setContentType(contentType);
+        ServletUtil.write(response, response1.bodyStream());
+    }
 
 
 
