@@ -7,5 +7,6 @@ import cn.jiangzeyin.common.interceptor.BaseInterceptor;
  */
 public abstract class BaseLinxInterceptor extends BaseInterceptor {
 
+    public static final String PROXY_PATH = "Jpom-ProxyPath";
 
 }
