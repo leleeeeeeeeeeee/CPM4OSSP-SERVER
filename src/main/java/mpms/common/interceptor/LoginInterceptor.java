@@ -36,6 +36,7 @@ public class LoginInterceptor extends BaseLinxInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
         HttpSession session = getSession();
+        
         //
         NotLogin notLogin = handlerMethod.getMethodAnnotation(NotLogin.class);
         if (notLogin == null) {
