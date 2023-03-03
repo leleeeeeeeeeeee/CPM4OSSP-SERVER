@@ -124,5 +124,9 @@ public class PermissionInterceptor extends BaseLinxInterceptor {
 		}
 	}
 
+	private void errorMsg(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+		JsonMessage<String> jsonMessage = new JsonMessage<>(302, "你没有权限:-2");
+		ServletUtil.write(response, jsonMessage.toString(), MediaType.APPLICATION_JSON_VALUE);
+	}
 }
