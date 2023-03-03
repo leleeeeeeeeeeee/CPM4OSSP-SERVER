@@ -245,6 +245,45 @@ public class NodeForward {
     }
 
 
+    /**
+     * 上传文件消息转发
+     *
+     * @param nodeModel 节点
+     * @param request   请求
+     * @param nodeUrl   节点的url
+     * @return json
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static JsonMessage<String> requestMultipart(NodeModel nodeModel, MultipartHttpServletRequest request, NodeUrl nodeUrl) {
+        String url = nodeModel.getRealUrl(nodeUrl);
+        HttpRequest httpRequest = HttpUtil.createPost(url);
+        addUser(httpRequest, nodeModel, nodeUrl);
+
+        Map params = ServletUtil.getParams(request);
+        httpRequest.form(params);
+
+        Map<String, MultipartFile> fileMap = request.getFileMap();
+        fileMap.forEach((s, multipartFile) -> {
+            try {
+                httpRequest.form(s, multipartFile.getBytes(), multipartFile.getOriginalFilename());
+            } catch (IOException e) {
+                DefaultSystemLog.getLog().error("转发文件异常", e);
+            }
+        });
+        HttpResponse response;
+        try {
+
+            httpRequest.timeout(ServerExtConfigBean.getInstance().getUploadFileTimeOut());
+            response = httpRequest.execute();
+        } catch (Exception e) {
+            throw new AgentException(nodeModel.getName() + "节点异常：" + e.getMessage(), e);
+        }
+        return parseBody(response);
+    }
+
+    /**
+
+
 
 
 
