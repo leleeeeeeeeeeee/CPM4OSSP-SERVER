@@ -15,6 +15,14 @@ public class TestJavaTail {
 
 
 
-
+    public static boolean forceDelete(File file) {
+        boolean result = file.delete();
+        int tryCount = 0;
+        while (!result && tryCount++ < 10) {
+            System.gc();    //回收资源
+            result = file.delete();
+        }
+        return result;
+    }
 
 }
