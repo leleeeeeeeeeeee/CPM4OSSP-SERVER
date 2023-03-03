@@ -62,7 +62,13 @@ public abstract class BaseServerController extends BaseJpomController {
 		USER_MODEL_THREAD_LOCAL.remove();
 	}
 
-
+	public static UserModel getUserModel() {
+		ServletRequestAttributes servletRequestAttributes = tryGetRequestAttributes();
+		if (servletRequestAttributes == null) {
+			return null;
+		}
+		return (UserModel) servletRequestAttributes.getAttribute(LoginInterceptor.SESSION_NAME, RequestAttributes.SCOPE_SESSION);
+	}
 
 
 }
