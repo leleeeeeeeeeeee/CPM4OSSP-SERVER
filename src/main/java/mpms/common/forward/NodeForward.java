@@ -70,6 +70,20 @@ public class NodeForward {
         return request(nodeModel, null, nodeUrl, true, userModel, jsonObject, null, null);
     }
 
+    /**
+     * 普通消息转发
+     *
+     * @param nodeModel 节点
+     * @param nodeUrl   节点的url
+     * @param pName     主参数名
+     * @param pVal      主参数值
+     * @param val       其他参数
+     * @return JSON
+     */
+    public static <T> JsonMessage<T> requestBySys(NodeModel nodeModel, NodeUrl nodeUrl, String pName, Object pVal, Object... val) {
+        return request(nodeModel, null, nodeUrl, false, null, null, pName, pVal, val);
+    }
+
 
 
 
