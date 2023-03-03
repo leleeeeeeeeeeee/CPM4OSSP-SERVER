@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestJschExec {
 
-
+	private static final String cmd = "ps -ef | grep jpom-test-jar | awk '{print $2}' | xargs kill -9";
 
 
 
