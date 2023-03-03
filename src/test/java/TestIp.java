@@ -12,7 +12,6 @@ public class TestIp {
 		System.out.println(NetUtil.getLocalhostStr());
 		System.out.println(NetUtil.getLocalhost().getHostAddress());
 	}
-
 	@Test
 	public void test1() {
 
