@@ -57,6 +57,19 @@ public class NodeForward {
         return request(nodeModel, request, nodeUrl, true, null, jsonObject, null, null);
     }
 
+    /**
+     * 普通消息转发
+     *
+     * @param nodeModel  节点
+     * @param nodeUrl    节点的url
+     * @param jsonObject 数据
+     * @param userModel  user
+     * @return JSON
+     */
+    public static JsonMessage<String> request(NodeModel nodeModel, NodeUrl nodeUrl, UserModel userModel, JSONObject jsonObject) {
+        return request(nodeModel, null, nodeUrl, true, userModel, jsonObject, null, null);
+    }
+
 
 
 
