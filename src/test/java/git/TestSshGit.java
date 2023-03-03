@@ -19,6 +19,14 @@ import org.junit.Test;
 import java.io.*;
 import java.security.PrivateKey;
 
+/**
+ * https://qa.1r1g.com/sf/ask/875171671/
+ * <p>
+ * https://www.jianshu.com/p/036072b45a2d
+ *
+ *
+
+ **/
 public class TestSshGit {
 	public static void main(String[] args) throws GitAPIException, IOException {
 		File directory = new File("～/test/gitssh");
