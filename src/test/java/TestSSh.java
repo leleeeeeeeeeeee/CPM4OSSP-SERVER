@@ -59,5 +59,28 @@ public class TestSSh {
         }
     }
 
+    /**
+     * 执行一条命令
+     */
+    public static void execCmd(String command, Session session) throws Exception {
+        Channel channel = JschUtil.createChannel(session, ChannelType.EXEC);
+        ((ChannelExec) channel).setCommand(command);
+        channel.setInputStream(null);
+        ((ChannelExec) channel).setErrStream(System.err);
 
+
+        System.out.println("执行");
+        InputStream inputStream = channel.getInputStream();
+        channel.connect();
+        IoUtil.readLines(inputStream, CharsetUtil.CHARSET_UTF_8, new LineHandler() {
+            @Override
+            public void handle(String line) {
+                System.out.println(line);
+            }
+        });
+        int exitStatus = channel.getExitStatus();
+        System.out.println(exitStatus);
+        channel.disconnect();
+        session.disconnect();
+    }
 }
