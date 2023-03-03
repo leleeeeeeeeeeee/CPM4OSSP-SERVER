@@ -45,6 +45,14 @@ public class PermissionInterceptor extends BaseLinxInterceptor {
 	 */
 	private static final String TYPE_ADD = "add";
 
+	private void init() {
+		if (nodeService == null) {
+			nodeService = SpringUtil.getBean(NodeService.class);
+		}
+		if (roleService == null) {
+			roleService = SpringUtil.getBean(RoleService.class);
+		}
+	}
 
 
 
