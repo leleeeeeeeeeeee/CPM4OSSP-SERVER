@@ -17,6 +17,12 @@ import java.util.*;
 
 public class TestPath {
 
+	public static void main(String[] args) {
+		AntPathMatcher antPathMatcher = new AntPathMatcher();
+		System.out.println(antPathMatcher.match("/s/**/sss.html", "//s/s/s/sss.html"));
+		System.out.println(antPathMatcher.match("/s/*.html", "/s/sss.html"));
+		System.out.println(antPathMatcher.match("2.*", "2.5"));
+	}
 
 
 
