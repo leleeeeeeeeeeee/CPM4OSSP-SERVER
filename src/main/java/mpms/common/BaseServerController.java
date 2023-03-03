@@ -47,6 +47,10 @@ public abstract class BaseServerController extends BaseJpomController {
 		return nodeService.getItem(nodeId);
 	}
 
+	@Override
+	public void resetInfo() {
+		USER_MODEL_THREAD_LOCAL.set(getUserModel());
+	}
 
 
 
