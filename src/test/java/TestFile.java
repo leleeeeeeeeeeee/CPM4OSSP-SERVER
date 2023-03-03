@@ -14,6 +14,10 @@ public class TestFile {
     }
 
 
-   
+    @Test
+    public void testFile() {
+        File file = FileUtil.file("D:\\Idea\\hutool\\.git");
+        System.out.println(file.isHidden());
+    }
 
 }
