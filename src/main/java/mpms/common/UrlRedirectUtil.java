@@ -33,5 +33,27 @@ public class UrlRedirectUtil {
 		return getHeaderProxyPath(request, headName, null);
 	}
 
+	/**
+	 * 二级代理路径
+	 *
+	 * @param request req
+	 * @return context-path+nginx配置
+	 */
+	public static String getHeaderProxyPath(HttpServletRequest request, String headName, Function<String, String> function) {
+		String proxyPath = ServletUtil.getHeaderIgnoreCase(request, headName);
 
+		if (StrUtil.isEmpty(proxyPath)) {
+			return request.getContextPath();
+		}
+		// 回调处理
+		if (function != null) {
+			proxyPath = function.apply(proxyPath);
+		}
+
+		proxyPath = FileUtil.normalize(request.getContextPath() + StrUtil.SLASH + proxyPath);
+		if (proxyPath.endsWith(StrUtil.SLASH)) {
+			proxyPath = proxyPath.substring(0, proxyPath.length() - 1);
+		}
+		return proxyPath;
+	}
 }
