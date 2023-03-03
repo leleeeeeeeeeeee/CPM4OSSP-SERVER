@@ -26,13 +26,43 @@ public class TestPath {
 
 	@Test
 	public void testSort() {
-		
 		ArrayList<String> list = CollUtil.newArrayList("dev", "master", "v1.1", "v0.4", "v.1", "v3.5.2", "v3.6", "v3.5.3");
 		list.sort((o1, o2) -> VersionComparator.INSTANCE.compare(o2, o1));
 		list.forEach(System.out::println);
 	}
 
+	@Test
+	public void testFilePath() {
+		AntPathMatcher antPathMatcher = new AntPathMatcher();
+		List<String> paths = new ArrayList<>();
+		File rootFile = FileUtil.file("~/jpom");
+		String matchStr = "/agent/**/log";
+		matchStr = FileUtil.normalize(StrUtil.SLASH + matchStr);
+		String finalMatchStr = matchStr;
+		FileUtil.walkFiles(rootFile.toPath(), new SimpleFileVisitor<Path>() {
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+				return this.test(file);
+			}
 
+			@Override
+			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes exc) throws IOException {
+				return this.test(dir);
+			}
+
+			private FileVisitResult test(Path path) {
+				String subPath = FileUtil.subPath(FileUtil.getAbsolutePath(rootFile), path.toFile());
+				subPath = FileUtil.normalize(StrUtil.SLASH + subPath);
+				if (antPathMatcher.match(finalMatchStr, subPath)) {
+					paths.add(subPath);
+					return FileVisitResult.TERMINATE;
+				}
+				return FileVisitResult.CONTINUE;
+			}
+		});
+		paths.forEach(System.out::println);
+
+	}
 
 
 }
