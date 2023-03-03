@@ -18,5 +18,9 @@ public class TestJavaPath {
 
     }
 
-   
+    @Test
+    public void t1() {
+        Map<String, String> getenv = System.getenv();
+        System.out.println(getenv.get("JAVA_HOME"));
+    }
 }
