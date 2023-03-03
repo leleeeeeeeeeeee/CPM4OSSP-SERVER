@@ -82,7 +82,49 @@ public class TestJschExec {
 		}
 	}
 
+	@Test
+	public void test() throws IOException, JSchException {
+		Charset charset = CharsetUtil.CHARSET_UTF_8;
+		Session session = JschUtil.createSession("192.168.1.8", 22, "root", "123456+");
+		ChannelExec channel = (ChannelExec) JschUtil.createChannel(session, ChannelType.EXEC);
 
+		// 添加环境变量
+		channel.setCommand(cmd);
+		InputStream inputStream = channel.getInputStream();
+		InputStream errStream = channel.getErrStream();
+		channel.connect((int) TimeUnit.SECONDS.toMillis(5));
+		//
+		SyncFinisher syncFinisher = new SyncFinisher(2);
+		final String[] error = new String[1];
+		final String[] result = new String[1];
+		//
+		syncFinisher.addRepeatWorker(() -> {
+			try {
+				error[0] = IoUtil.read(errStream, charset);
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (!StrUtil.contains(e.getMessage(), "Pipe closed")) {
+					DefaultSystemLog.getLog().error("读取 exec err 流发生异常", e);
+					error[0] = "读取 exec err 流发生异常" + e.getMessage();
+				}
+			} finally {
+				syncFinisher.stop();
+			}
+		}).addRepeatWorker(() -> {
+			try {
+				result[0] = IoUtil.read(inputStream, charset);
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (!StrUtil.contains(e.getMessage(), "Pipe closed")) {
+					DefaultSystemLog.getLog().error("读取 exec 流发生异常", e);
+					result[0] = "读取 exec 流发生异常" + e.getMessage();
+				}
+			} finally {
+				syncFinisher.stop();
+			}
+		}).start();
+		System.out.println(result[0] + "  " + error[0]);
+	}
 
 
 
