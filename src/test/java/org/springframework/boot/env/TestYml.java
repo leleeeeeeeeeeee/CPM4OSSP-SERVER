@@ -10,5 +10,10 @@ public class TestYml {
 
     public static void main(String[] args) throws IOException {
 
+        FileSystemResource fileSystemResource = new FileSystemResource("D:\\Idea\\Jpom\\modules\\agent\\target\\agent-2.4.3-release\\extConfig.yml");
+
+        OriginTrackedYamlLoader originTrackedYamlLoader = new OriginTrackedYamlLoader(fileSystemResource);
+        List<Map<String, Object>> load = originTrackedYamlLoader.load();
+        System.out.println(load);
     }
 }
