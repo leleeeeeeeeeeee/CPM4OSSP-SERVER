@@ -15,7 +15,16 @@ import java.util.jar.Manifest;
  */
 public class TestJarClass {
 
+	@Test
+	public void test(){
+		JarFile jarFile = URLUtil.getJarFile(Hutool.class.getResource(""));
+		System.out.println(jarFile.getName());
+		URL location = ClassUtil.getLocation(JpomManifest.class);
+		System.out.println(location);
 
+		String location1 = ClassUtil.getLocationPath(JpomManifest.class);
+		System.out.println(location1);
+	}
 
 
     public static void main(String[] args) throws IOException {
