@@ -36,12 +36,8 @@ public class LoginInterceptor extends BaseLinxInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
         HttpSession session = getSession();
+
         
-        //
-        NotLogin notLogin = handlerMethod.getMethodAnnotation(NotLogin.class);
-        if (notLogin == null) {
-            notLogin = handlerMethod.getBeanType().getAnnotation(NotLogin.class);
-        }
         if (notLogin == null) {
             // 这里需要判断请求头里是否有 Authorization 属性
             String authorization = request.getHeader(ServerOpenApi.HTTP_HEAD_AUTHORIZATION);
