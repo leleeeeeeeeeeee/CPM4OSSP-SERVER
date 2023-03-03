@@ -53,6 +53,13 @@ public class ProxyOperat {
         return null;
     }
 
+    private void writeToFile(NodeModel nodeModel) {
+        String nodeIp = nodeModel.getUrl().split(":")[0];
+        String proxyPort = nodeModel.getProxyPort();
+        String conf = LOCAL_HOST + proxyPort + " " + nodeIp + " " + COMMUNICATION_PORT + '\n';
+        FileUtil.appendString(conf, CONF_PATH, StandardCharsets.UTF_8);
+    }
+
 
 
 
