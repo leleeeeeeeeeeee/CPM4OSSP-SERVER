@@ -24,7 +24,12 @@ public class TestPath {
 		System.out.println(antPathMatcher.match("2.*", "2.5"));
 	}
 
-
+	@Test
+	public void testSort() {
+		ArrayList<String> list = CollUtil.newArrayList("dev", "master", "v1.1", "v0.4", "v.1", "v3.5.2", "v3.6", "v3.5.3");
+		list.sort((o1, o2) -> VersionComparator.INSTANCE.compare(o2, o1));
+		list.forEach(System.out::println);
+	}
 
 
 
