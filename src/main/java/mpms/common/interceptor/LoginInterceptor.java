@@ -28,7 +28,35 @@ import java.util.concurrent.TimeUnit;
  */
 @InterceptorPattens(sort = -1, exclude = ServerOpenApi.API + "**")
 public class LoginInterceptor extends BaseLinxInterceptor {
+    /**
+     * session
+     */
+    public static final String SESSION_NAME = "user";
 
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+        HttpSession session = getSession();
+        //
+        NotLogin notLogin = handlerMethod.getMethodAnnotation(NotLogin.class);
+        if (notLogin == null) {
+            notLogin = handlerMethod.getBeanType().getAnnotation(NotLogin.class);
+        }
+        if (notLogin == null) {
+            // 这里需要判断请求头里是否有 Authorization 属性
+            String authorization = request.getHeader(ServerOpenApi.HTTP_HEAD_AUTHORIZATION);
+            if (StrUtil.isNotEmpty(authorization)) {
+                // jwt token 检测机制
+                int code = this.checkHeaderUser(request, session);
+                if (code > 0) {
+                    this.responseLogin(request, response, handlerMethod, code);
+                    return false;
+                }
+            }
+        }
+        reload();
+        //
+        return true;
+    }
 
     /**
      * 尝试获取 header 中的信息
