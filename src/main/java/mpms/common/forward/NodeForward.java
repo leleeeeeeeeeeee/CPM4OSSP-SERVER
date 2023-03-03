@@ -158,6 +158,38 @@ public class NodeForward {
         return parseBody(response);
     }
 
+    public static <T> JsonMessage<T> requestJson(NodeModel nodeModel,
+                                                  HttpServletRequest request,
+                                                  NodeUrl nodeUrl,
+                                                  JSONObject jsonData
+    ) {
+        if (jsonData == null) {
+            jsonData = new JSONObject();
+        }
+        String url = nodeModel.getRealUrl(nodeUrl);
+        HttpRequest httpRequest = HttpUtil.createPost(url);
+        addUser(httpRequest, nodeModel, nodeUrl, null);
+
+        Map params = null;
+        if (request != null) {
+            params = request.getParameterMap();
+            if (XssFilter.isXSS() && params != null) {
+                jsonData.putAll(params);
+            }
+        }
+
+        HttpResponse response;
+        try {
+            response = httpRequest.body(jsonData.toJSONString())
+                    .execute();
+        } catch (Exception e) {
+            DefaultSystemLog.getLog().error("node [{}] connect failed...message: [{}]", nodeModel.getName(), e.getMessage());
+            throw new AgentException(nodeModel.getName() + "节点异常：" + e.getMessage());
+        }
+        return parseBody(response);
+    }
+
+
 
 
 
