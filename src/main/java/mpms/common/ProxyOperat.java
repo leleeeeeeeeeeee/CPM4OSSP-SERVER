@@ -21,6 +21,19 @@ import java.util.Set;
 
 @Component
 public class ProxyOperat {
+    public static final String CONF_PATH = "/etc/linxsaclient.conf";
+    public static final String LOCAL_HOST = "127.0.0.1 ";
+    public static final String COMMUNICATION_PORT = "57000";
+    public static final String PROXY_START_CMD = "/etc/linxsaclientd restart";
+
+
+    @Resource
+    private NodeinfoDao nodeinfoDao;
+
+    public String proxyRestart() {
+        String result = CommandUtil.execSystemCommand(PROXY_START_CMD);
+        return null;
+    }
 
 
 
