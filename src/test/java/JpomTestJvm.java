@@ -7,5 +7,8 @@ import java.util.List;
 import java.util.Properties;
 
 public class JpomTestJvm {
-    
+
+    public static void main(String[] args) throws IOException, AttachNotSupportedException {
+
+    }
 }
