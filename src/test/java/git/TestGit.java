@@ -93,5 +93,24 @@
 //	}
 //
 //
+//	@Test
+//	public void testTag2() throws Exception {
+//		String uri = "https://gitee.com/keepbx/Jpom-demo-case.git";
+//		File file = FileUtil.file("~/test/jpomgit2");
+//		String tagName = "1.2";
+//		String branchName = "master";
+//		UsernamePasswordCredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider("a", "a");
+//
+//		PrintWriter printWriter = new PrintWriter(System.out);
+//
+//		RepositoryModel repositoryModel = new RepositoryModel();
+//		repositoryModel.setGitUrl(uri);
+//		repositoryModel.setRepoType(0);
+//		repositoryModel.setUserName("a");
+//		repositoryModel.setPassword("a");
+//		String msg = GitUtil.checkoutPullTag(repositoryModel, file, branchName, tagName, printWriter);
+//		System.out.println(msg);
+//
+//	}
 //
 //}
