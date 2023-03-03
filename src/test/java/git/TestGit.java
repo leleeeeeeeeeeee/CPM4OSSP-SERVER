@@ -51,4 +51,47 @@
 //		Files.delete(path);
 //	}
 //
+//
+//	public static void main(String[] args) throws GitAPIException, IOException, URISyntaxException {
+//
+//		Git git = Git.init().setDirectory(new File("D:\\tttt")).call();
+//		RemoteConfig remoteConfig = Git.open(new File("D:\\tttt")).remoteAdd().setUri(new URIish("https://gitee.com/keepbx/Jpom.git")).call();
+//		System.out.println(remoteConfig);
+//
+//		List<RemoteConfig> call = git.remoteList().call();
+//		System.out.println(call);
+//		git.pull().call();
+//		List<Ref> list = git.branchList().setListMode(ListBranchCommand.ListMode.REMOTE).call();
+//		List<String> all = new ArrayList<>(list.size());
+//		list.forEach(ref -> {
+//			String name = ref.getName();
+//			if (name.startsWith(Constants.R_REMOTES + Constants.DEFAULT_REMOTE_NAME)) {
+//				all.add(name.substring((Constants.R_REMOTES + Constants.DEFAULT_REMOTE_NAME).length() + 1));
+//			}
+//		});
+//		System.out.println(all);
+//	}
+//
+//
+//	@Test
+//	public void testTag() throws Exception {
+//		String uri = "https://gitee.com/dromara/Jpom.git";
+//		File file = FileUtil.file("~/test/jpomgit");
+//		String tagName = "v2.5.2";
+//		String branchName = "stand-alone";
+//
+//		PrintWriter printWriter = new PrintWriter(System.out);
+//		RepositoryModel repositoryModel = new RepositoryModel();
+//		repositoryModel.setGitUrl(uri);
+//		repositoryModel.setRepoType(RepositoryModel.RepoType.Git.getCode());
+//		repositoryModel.setUserName("a");
+//		repositoryModel.setPassword("a");
+//		repositoryModel.setProtocol(GitProtocolEnum.HTTP.getCode());
+//
+//		GitUtil.checkoutPullTag(repositoryModel, file, branchName, tagName, printWriter);
+//
+//	}
+//
+//
+//
 //}
