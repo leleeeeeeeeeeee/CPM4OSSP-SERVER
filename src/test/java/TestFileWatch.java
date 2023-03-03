@@ -15,7 +15,10 @@ public class TestFileWatch {
         WatchMonitor watchMonitor = WatchUtil.create(file);
 
 
-
+            @Override
+            public void onModify(WatchEvent<?> event, Path currentPath) {
+                System.out.println("onModify" + event);
+            }
 
             @Override
             public void onDelete(WatchEvent<?> event, Path currentPath) {
