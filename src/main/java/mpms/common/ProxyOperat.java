@@ -60,7 +60,14 @@ public class ProxyOperat {
         FileUtil.appendString(conf, CONF_PATH, StandardCharsets.UTF_8);
     }
 
-
+    private JSONObject getInfoFromDb() {
+        JSONObject allData = new JSONObject();
+        List<Nodeinfo> nodeInfo = nodeinfoDao.queryAllData();
+        for (Nodeinfo it : nodeInfo) {
+            allData.put(it.getName(), it.getJson());
+        }
+        return allData;
+    }
 
 
 
