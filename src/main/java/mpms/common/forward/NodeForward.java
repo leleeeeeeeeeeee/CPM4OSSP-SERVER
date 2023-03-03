@@ -313,9 +313,91 @@ public class NodeForward {
         ServletUtil.write(response, response1.bodyStream());
     }
 
+    private static void addUser(HttpRequest httpRequest, NodeModel nodeModel, NodeUrl nodeUrl) {
+        UserModel userModel = BaseServerController.getUserModel();
+        addUser(httpRequest, nodeModel, nodeUrl, userModel);
+    }
 
+    /**
+     * 添加agent 授权信息header
+     *
+     * @param httpRequest request
+     * @param nodeModel   节点
+     * @param userModel   用户
+     */
+    private static void addUser(HttpRequest httpRequest, NodeModel nodeModel, NodeUrl nodeUrl, UserModel userModel) {
+        // 判断开启状态
+        if (!nodeModel.isOpenStatus()) {
+            throw new LinuxRuntimeException(nodeModel.getName() + "节点未启用");
+        }
+        if (userModel != null) {
+            httpRequest.header(ConfigBean.MPMS_SERVER_USER_NAME, URLEncoder.DEFAULT.encode(UserModel.getOptUserName(userModel), CharsetUtil.CHARSET_UTF_8));
+        }
+        httpRequest.header(ConfigBean.MPMS_AGENT_AUTHORIZE, nodeModel.toAuthorize());
 
+        int timeOut = nodeModel.getTimeOut();
+        if (nodeUrl.getTimeOut() != -1 && timeOut > 0) {
 
+            timeOut = Math.max(timeOut, 2);
+            httpRequest.timeout(timeOut * 1000);
+        }
+    }
 
+    /**
+     * 获取节点socket 信息
+     *
+     * @param nodeModel 节点信息
+     * @param nodeUrl   url
+     * @return url
+     */
+    public static String getSocketUrl(NodeModel nodeModel, NodeUrl nodeUrl, UserModel userInfo, Object... parameters) {
+        String ws;
+        if ("https".equalsIgnoreCase(nodeModel.getProtocol())) {
+            ws = "wss";
+        } else {
+            ws = "ws";
+        }
+        UrlQuery urlQuery = new UrlQuery();
+        urlQuery.add(ConfigBean.MPMS_AGENT_AUTHORIZE, nodeModel.toAuthorize());
+        // 兼容旧版本-节点升级
+        urlQuery.add("name", nodeModel.getLoginName());
+        urlQuery.add("password", nodeModel.getLoginPwd());
 
+        String optUser = UserModel.getOptUserName(userInfo);
+        optUser = URLUtil.encode(optUser);
+        urlQuery.add("optUser", optUser);
+        if (ArrayUtil.isNotEmpty(parameters)) {
+            for (int i = 0; i < parameters.length; i += 2) {
+                urlQuery.add(parameters[i].toString(), parameters[i + 1]);
+            }
+        }
+        return StrUtil.format("{}://{}{}?{}", ws, nodeModel.getUrl(), nodeUrl.getUrl(), urlQuery.toString());
+    }
+
+    /**
+     * 解析结果
+     *
+     * @param response 响应
+     * @return json
+     */
+    private static <T> JsonMessage<T> parseBody(HttpResponse response) {
+        int status = response.getStatus();
+        if (status != HttpStatus.HTTP_OK) {
+            throw new AgentException("proxy端响应异常：" + status);
+        }
+        String body = response.body();
+        return toJsonMessage(body);
+    }
+
+    private static <T> JsonMessage<T> toJsonMessage(String body) {
+        if (StrUtil.isEmpty(body)) {
+            throw new AgentException("proxy端响应内容为空");
+        }
+        JsonMessage<T> jsonMessage = JSON.parseObject(body, new TypeReference<JsonMessage<T>>() {
+        });
+        if (jsonMessage.getCode() == ConfigBean.AUTHORIZE_ERROR) {
+            throw new AuthorizeException(jsonMessage, jsonMessage.getMsg());
+        }
+        return jsonMessage;
+    }
 }
