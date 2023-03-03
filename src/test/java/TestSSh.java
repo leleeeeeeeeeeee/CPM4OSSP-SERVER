@@ -9,7 +9,7 @@ import com.jcraft.jsch.*;
 import java.io.*;
 
 public class TestSSh {
-
+    private static final String charset = "UTF-8"; // 设置编码格式
 
 
 }
