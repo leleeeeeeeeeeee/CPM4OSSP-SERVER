@@ -69,6 +69,14 @@ public class ProxyOperat {
         return allData;
     }
 
+    private List<NodeModel> list(Class<NodeModel> cls){
+        JSONObject jsonObject = getInfoFromDb();
+        if (jsonObject == null) {
+            return new ArrayList<>();
+        }
+        JSONArray jsonArray = formatToArray(jsonObject);
+        return jsonArray.toJavaList(cls);
+    }
 
 
 }
