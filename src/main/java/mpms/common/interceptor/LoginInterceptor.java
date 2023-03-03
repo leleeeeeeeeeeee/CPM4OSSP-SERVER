@@ -31,6 +31,28 @@ public class LoginInterceptor extends BaseLinxInterceptor {
 
 
 
+    /**
+     * 尝试获取 header 中的信息
+     *
+     * @param session ses
+     * @param request req
+     * @return true 获取成功
+     */
+    private boolean tryGetHeaderUser(HttpServletRequest request, HttpSession session) {
+        String header = request.getHeader(ServerOpenApi.USER_TOKEN_HEAD);
+        if (StrUtil.isEmpty(header)) {
+            // 兼容就版本 登录状态
+            UserModel user = (UserModel) session.getAttribute(SESSION_NAME);
+            return user != null;
+        }
+        UserService userService = SpringUtil.getBean(UserService.class);
+        UserModel userModel = userService.checkUser(header);
+        if (userModel == null) {
+            return false;
+        }
+        session.setAttribute(LoginInterceptor.SESSION_NAME, userModel);
+        return true;
+    }
 
     /**
      * 提示登录
