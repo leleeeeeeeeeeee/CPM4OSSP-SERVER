@@ -14,7 +14,14 @@ import java.util.function.Function;
  */
 public class UrlRedirectUtil {
 
-
+	private static int getPort(HttpServletRequest request) {
+		String proxyPort = ServletUtil.getHeaderIgnoreCase(request, "X-Forwarded-Port");
+		int port = 0;
+		if (StrUtil.isNotEmpty(proxyPort)) {
+			port = Integer.parseInt(proxyPort);
+		}
+		return port;
+	}
 
 
 
