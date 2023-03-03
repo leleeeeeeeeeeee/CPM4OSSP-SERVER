@@ -16,4 +16,14 @@ import java.util.jar.Manifest;
 public class TestJarClass {
 
 
+
+
+    public static void main(String[] args) throws IOException {
+        JarFile jarFile = new JarFile("D:\\SystemDocument\\Desktop\\springboot-test-jar-0.0.1-SNAPSHOT.jar");
+
+        Manifest manifest = jarFile.getManifest();
+        Attributes attributes = manifest.getMainAttributes();
+        String mainClass = attributes.getValue("Main-Class");
+        System.out.println(mainClass);
+    }
 }
