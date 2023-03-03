@@ -58,6 +58,9 @@ public abstract class BaseServerController extends BaseJpomController {
 		return userModel;
 	}
 
+	public static void remove() {
+		USER_MODEL_THREAD_LOCAL.remove();
+	}
 
 
 
