@@ -28,6 +28,23 @@ public class TestCpu {
         return "内存已使用:" + compare.intValue() + "%";
     }
 
+    public static String getCpuRatio() {
+        try {
+            String procCmd = "wmic process get Caption,CommandLine,KernelModeTime,ReadOperationCount,ThreadCount,UserModeTime,WriteOperationCount";
+            long[] c0 = readCpu(Runtime.getRuntime().exec(procCmd));    // 取进程信息
+            long[] c1 = readCpu(Runtime.getRuntime().exec(procCmd));
+            if (c0 != null && c1 != null) {
+                long idletime = c1[0] - c0[0];
+                long busytime = c1[1] - c0[1];
+                return "CPU使用率:" + Double.valueOf(100 * (busytime) * 1.0 / (busytime + idletime)).intValue() + "%";
+            } else {
+                return "CPU使用率:" + 0 + "%";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "CPU使用率:" + 0 + "%";
+        }
+    }
 
 
 
