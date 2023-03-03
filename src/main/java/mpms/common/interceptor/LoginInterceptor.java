@@ -28,7 +28,75 @@ import java.util.concurrent.TimeUnit;
  */
 @InterceptorPattens(sort = -1, exclude = ServerOpenApi.API + "**")
 public class LoginInterceptor extends BaseLinxInterceptor {
+    /**
+     * session
+     */
+    public static final String SESSION_NAME = "user";
 
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+        HttpSession session = getSession();
+        
+        //
+        NotLogin notLogin = handlerMethod.getMethodAnnotation(NotLogin.class);
+        if (notLogin == null) {
+            notLogin = handlerMethod.getBeanType().getAnnotation(NotLogin.class);
+        }
+        if (notLogin == null) {
+            // 这里需要判断请求头里是否有 Authorization 属性
+            String authorization = request.getHeader(ServerOpenApi.HTTP_HEAD_AUTHORIZATION);
+            if (StrUtil.isNotEmpty(authorization)) {
+                // jwt token 检测机制
+                int code = this.checkHeaderUser(request, session);
+                if (code > 0) {
+                    this.responseLogin(request, response, handlerMethod, code);
+                    return false;
+                }
+            }
+        }
+        reload();
+        //
+        return true;
+    }
+
+    /**
+     * 尝试获取 header 中的信息
+     *
+     * @param session ses
+     * @param request req
+     * @return true 获取成功
+     */
+    private int checkHeaderUser(HttpServletRequest request, HttpSession session) {
+        String token = request.getHeader(ServerOpenApi.HTTP_HEAD_AUTHORIZATION);
+        if (StrUtil.isEmpty(token)) {
+            return ServerConfigBean.AUTHORIZE_TIME_OUT_CODE;
+        }
+        JWT jwt = JwtUtil.readBody(token);
+        if (JwtUtil.expired(jwt, 0)) {
+            int renewal = ServerExtConfigBean.getInstance().getAuthorizeRenewal();
+            if (jwt == null || renewal <= 0 || JwtUtil.expired(jwt, TimeUnit.MINUTES.toSeconds(renewal))) {
+                return ServerConfigBean.AUTHORIZE_TIME_OUT_CODE;
+            }
+            return ServerConfigBean.RENEWAL_AUTHORIZE_CODE;
+        }
+        UserModel user = (UserModel) session.getAttribute(SESSION_NAME);
+        UserService userService = SpringUtil.getBean(UserService.class);
+        String id = JwtUtil.getId(jwt);
+        UserModel newUser = userService.checkUserFromDB(id);
+        if (newUser == null) {
+            return ServerConfigBean.AUTHORIZE_TIME_OUT_CODE;
+        }
+        if (null != user) {
+            String tokenUserId = JwtUtil.readUserId(jwt);
+            boolean b = user.getId().equals(tokenUserId) && user.getUserMd5Key().equals(id)
+                    && user.getModifyTime() == newUser.getModifyTime();
+            if (!b) {
+                return ServerConfigBean.AUTHORIZE_TIME_OUT_CODE;
+            }
+        }
+        session.setAttribute(LoginInterceptor.SESSION_NAME, newUser);
+        return 0;
+    }
 
 
     /**
