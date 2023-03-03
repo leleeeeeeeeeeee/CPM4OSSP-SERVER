@@ -50,5 +50,40 @@ public class IpInterceptor extends BaseLinxInterceptor {
 	}
 
 
-
+	/**
+	 * 检查ip 地址是否可以访问
+	 *
+	 * @param value    配置的值
+	 * @param ip       被检查的 ip 地址
+	 * @param checkAll 是否检查开放所有、避免禁止所有 ip 访问
+	 * @return true 命中检查项
+	 */
+	private boolean checkIp(String value, String ip, boolean checkAll) {
+		long ipNum = NetUtil.ipv4ToLong(ip);
+		String[] split = StrUtil.splitToArray(value, StrUtil.LF);
+		boolean check;
+		for (String itemIp : split) {
+			itemIp = itemIp.trim();
+			if (itemIp.startsWith("#")) {
+				continue;
+			}
+			if (checkAll && StrUtil.equals(itemIp, "0.0.0.0")) {
+				// 开放所有
+				return true;
+			}
+			if (StrUtil.contains(itemIp, CharUtil.SLASH)) {
+				// ip段
+				String[] itemIps = StrUtil.splitToArray(itemIp, StrUtil.SLASH);
+				long aBegin = NetUtil.ipv4ToLong(itemIps[0]);
+				long aEnd = NetUtil.ipv4ToLong(itemIps[1]);
+				check = (ipNum >= aBegin) && (ipNum <= aEnd);
+			} else {
+				check = StrUtil.equals(itemIp, ip);
+			}
+			if (check) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
