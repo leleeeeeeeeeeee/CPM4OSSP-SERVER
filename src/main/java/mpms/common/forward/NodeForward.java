@@ -31,6 +31,19 @@ import java.util.Map;
  */
 public class NodeForward {
 
+    /**
+     * 普通消息转发
+     *
+     * @param nodeModel 节点
+     * @param request   请求
+     * @param nodeUrl   节点的url
+     * @param <T>       泛型
+     * @return JSON
+     */
+    public static <T> JsonMessage<T> request(NodeModel nodeModel, HttpServletRequest request, NodeUrl nodeUrl) {
+        return request(nodeModel, request, nodeUrl, true, null, null, null, null);
+    }
+
 
 
 
