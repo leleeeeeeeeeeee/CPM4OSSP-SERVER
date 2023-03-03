@@ -13,7 +13,7 @@ public class TestString {
     public static void main(String[] args) {
 
         Pattern pattern = Pattern.compile("(https://|http://)?([\\w-]+\\.)+[\\w-]+(:\\d+|/)+([\\w- ./?%&=]*)?");
-        String url = "http://192.168.1.111:2122/node/index.html?nodeId=dyc";
+        String url = "http://172.30.1.111:2122/node/index.html?nodeId=dyc";
         System.out.println(ReUtil.isMatch(pattern, url));
         System.out.println(ReUtil.isMatch(PatternPool.URL_HTTP, url));
 
