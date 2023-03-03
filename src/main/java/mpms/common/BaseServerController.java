@@ -70,5 +70,31 @@ public abstract class BaseServerController extends BaseJpomController {
 		return (UserModel) servletRequestAttributes.getAttribute(LoginInterceptor.SESSION_NAME, RequestAttributes.SCOPE_SESSION);
 	}
 
+	/**
+	 * 处理分页的时间字段
+	 *
+	 * @param page    分页
+	 * @param entity  条件
+	 * @param colName 字段名称
+	 */
+	protected void doPage(Page page, Entity entity, String colName) {
+		String time = getParameter("time");
+		colName = colName.toUpperCase();
+		page.addOrder(new Order(colName, Direction.DESC));
+		// 时间
+		if (StrUtil.isNotEmpty(time)) {
+			String[] val = StrUtil.splitToArray(time, "~");
+			if (val.length == 2) {
+				DateTime startDateTime = DateUtil.parse(val[0], DatePattern.NORM_DATETIME_FORMAT);
+				entity.set(colName, ">= " + startDateTime.getTime());
 
+				DateTime endDateTime = DateUtil.parse(val[1], DatePattern.NORM_DATETIME_FORMAT);
+				if (startDateTime.equals(endDateTime)) {
+					endDateTime = DateUtil.endOfDay(endDateTime);
+				}
+				// 防止字段重复
+				entity.set(colName + " ", "<= " + endDateTime.getTime());
+			}
+		}
+	}
 }
