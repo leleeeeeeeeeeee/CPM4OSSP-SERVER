@@ -23,7 +23,15 @@ public class UrlRedirectUtil {
 		return port;
 	}
 
-
+	/**
+	 * 二级代理路径
+	 *
+	 * @param request req
+	 * @return context-path+nginx配置
+	 */
+	public static String getHeaderProxyPath(HttpServletRequest request, String headName) {
+		return getHeaderProxyPath(request, headName, null);
+	}
 
 
 }
