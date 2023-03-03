@@ -112,7 +112,17 @@ public class PermissionInterceptor extends BaseLinxInterceptor {
 		return true;
 	}
 
-
+	private void addNode(HttpServletRequest request) {
+		String nodeId = request.getParameter("nodeId");
+		if (!StrUtil.isBlankOrUndefined(nodeId)) {
+			// 节点信息
+			NodeModel nodeModel = nodeService.getItem(nodeId);
+			if (nodeModel != null && !nodeModel.isOpenStatus()) {
+				throw new AgentException(nodeModel.getName() + "节点未启用");
+			}
+			request.setAttribute("node", nodeModel);
+		}
+	}
 
 
 }
