@@ -17,7 +17,10 @@ public class TestFileWatch {
 
 
 
+            @Override
+            public void onDelete(WatchEvent<?> event, Path currentPath) {
 
+            }
 
             @Override
             public void onOverflow(WatchEvent<?> event, Path currentPath) {
