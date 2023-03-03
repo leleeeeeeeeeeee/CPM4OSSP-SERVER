@@ -41,7 +41,17 @@ public class ProxyOperat {
         return null;
     }
 
-
+    public String updateConf() {
+        List<NodeModel> nodeList = list(NodeModel.class);
+        FileUtil.writeUtf8String("", CONF_PATH);
+        for (NodeModel tmp : nodeList){
+            if (tmp.getProxyPort() !=null){
+                writeToFile(tmp);
+            }
+        }
+        proxyRestart();
+        return null;
+    }
 
 
 
