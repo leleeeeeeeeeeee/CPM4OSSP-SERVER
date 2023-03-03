@@ -204,6 +204,46 @@ public class NodeForward {
         return jsonMessage.getData(tClass);
     }
 
+    /**
+     * 普通消息转发,并解析数据
+     *
+     * @param nodeModel  节点
+     * @param nodeUrl    节点的url
+     * @param tClass     要解析的类
+     * @param <T>        泛型
+     * @param name       参数名
+     * @param parameters 其他参数
+     * @param value      值
+     * @return T
+     */
+    public static <T> T requestData(NodeModel nodeModel, NodeUrl nodeUrl, Class<T> tClass, String name, Object value, Object... parameters) {
+        String url = nodeModel.getRealUrl(nodeUrl);
+        //
+        HttpRequest httpRequest = HttpUtil.createPost(url);
+        if (name != null && value != null) {
+            httpRequest.form(name, value, parameters);
+        }
+        //
+        addUser(httpRequest, nodeModel, nodeUrl);
+        HttpResponse response;
+        try {
+            //
+            response = httpRequest
+                    .execute();
+        } catch (Exception e) {
+            /**
+             *
+             * revert version and add log print
+             *
+             */
+            DefaultSystemLog.getLog().error("node [{}] connect failed", nodeModel.getName(), e);
+            throw new AgentException(nodeModel.getName() + "节点异常：" + e.getMessage());
+        }
+
+        JsonMessage<T> jsonMessage = parseBody(response);
+        return jsonMessage.getData(tClass);
+    }
+
 
 
 
