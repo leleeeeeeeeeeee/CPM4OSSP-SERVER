@@ -52,6 +52,11 @@ public abstract class BaseServerController extends BaseJpomController {
 		USER_MODEL_THREAD_LOCAL.set(getUserModel());
 	}
 
+	protected UserModel getUser() {
+		UserModel userModel = USER_MODEL_THREAD_LOCAL.get();
+		Objects.requireNonNull(userModel);
+		return userModel;
+	}
 
 
 
