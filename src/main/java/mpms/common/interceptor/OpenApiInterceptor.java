@@ -44,7 +44,10 @@ public class OpenApiInterceptor extends BaseInterceptor {
         }
         String md5 = SecureUtil.md5(authorizeToken);
         md5 = SecureUtil.sha1(md5 + ServerOpenApi.HEAD);
-
+        if (!StrUtil.equals(header, md5)) {
+            ServletUtil.write(response, JsonMessage.getString(300, "not config token"), MediaType.APPLICATION_JSON_VALUE);
+            return false;
+        }
         return true;
     }
 }
